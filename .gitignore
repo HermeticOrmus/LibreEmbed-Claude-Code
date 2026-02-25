@@ -1,0 +1,70 @@
+# Embedded build artifacts
+*.o
+*.obj
+*.elf
+*.hex
+*.bin
+*.map
+*.lst
+*.srec
+*.s19
+*.d
+*.su
+
+# Build directories
+build/
+_build/
+output/
+Release/
+Debug/
+
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# IDE files
+.vscode/
+.idea/
+*.uvprojx
+*.uvoptx
+*.ewp
+*.eww
+*.ioc
+
+# Toolchain generated
+*.i
+*.s
+*.dep
+
+# Library archives
+*.a
+*.lib
+
+# Core dumps
+core
+*.core
+
+# Debug files
+*.dSYM/
+*.jlink
+*.cfg
+
+# OS generated
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Log files
+*.log
+hooks/logs/*.log
+
+# Temporary files
+*.tmp
+*.bak
+
+# Environment
+.env
+.env.local
