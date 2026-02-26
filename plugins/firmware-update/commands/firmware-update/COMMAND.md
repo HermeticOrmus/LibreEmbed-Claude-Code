@@ -1,87 +1,102 @@
 # /firmware-update
 
-A quick-access command for firmware-update workflows in Claude Code.
+Firmware OTA command: image packaging, distribution, flash write, verification, rollback.
 
 ## Trigger
 
-`/firmware-update [action] [options]`
+`/firmware-update <action> [options]`
 
-## Input
+## Actions
 
-### Actions
-- `analyze` - Analyze existing firmware-update implementation
-- `generate` - Generate new firmware-update artifacts
-- `improve` - Suggest improvements to current implementation
-- `validate` - Check implementation against best practices
-- `document` - Generate documentation for firmware-update artifacts
+### `package`
+Package a raw firmware binary with header and signature.
 
-### Options
-- `--context <path>` - Specify the file or directory to operate on
-- `--format <type>` - Output format (markdown, json, yaml)
-- `--verbose` - Include detailed explanations
-- `--dry-run` - Preview changes without applying them
+```
+/firmware-update package --tool imgtool --key ecdsa-p256.pem --version 2.1.0 --slot-size 0x70000
+/firmware-update package --custom-header --magic 0xDEADBEEF --crc32
+```
+
+### `distribute`
+Generate OTA distribution scripts or server configurations.
+
+```
+/firmware-update distribute --transport mqtt --broker mosquitto --topic-prefix device/fw
+/firmware-update distribute --transport aws-iot-jobs --thing-group my-devices
+/firmware-update distribute --transport http --server nginx --tls
+```
+
+### `apply`
+Generate MCU-side OTA write and verify code.
+
+```
+/firmware-update apply --mcu stm32f407 --banks dual --transport uart-ymodem
+/firmware-update apply --mcu esp32 --sdk esp-idf --transport https
+/firmware-update apply --mcu nrf52840 --bootloader mcuboot --transport ble-smp
+```
+
+### `verify`
+Generate post-write verification code.
+
+```
+/firmware-update verify --method crc32
+/firmware-update verify --method sha256+ecdsa --curve p256
+```
 
 ## Process
 
-### Step 1: Context Gathering
-- Read relevant files and configuration
-- Identify the current state of firmware-update artifacts
-- Determine applicable standards and conventions
+1. Define flash layout: bootloader size, bank A/B addresses, NVM region.
+2. Choose transport: MQTT for IoT, HTTPS for large payloads, BLE SMP for local.
+3. Implement write → verify → set-boot-flag → reset sequence.
+4. Implement confirm sequence with application-level self-test.
+5. Test power-loss simulation at each step.
 
-### Step 2: Analysis
-- Evaluate against firmware-update-patterns patterns
-- Identify gaps, issues, and opportunities
-- Prioritize findings by impact and effort
+## Output Examples
 
-### Step 3: Execution
-- Apply the requested action
-- Generate or modify artifacts as needed
-- Validate changes against requirements
-
-### Step 4: Output
-- Present results in the requested format
-- Include actionable next steps
-- Flag any items requiring human decision
-
-## Output
-
-### Success
-```
-## Firmware Update - [Action] Complete
-
-### Changes Made
-- [List of changes]
-
-### Validation
-- [Checks passed]
-
-### Next Steps
-- [Recommended follow-up actions]
-```
-
-### Error
-```
-## Firmware Update - [Action] Failed
-
-### Issue
-[Description of the problem]
-
-### Suggested Fix
-[How to resolve the issue]
-```
-
-## Examples
-
+### imgtool sign and flash
 ```bash
-# Analyze current implementation
-/firmware-update analyze
+# Package
+imgtool sign \
+  --key signing-key.pem --header-size 0x20 --align 4 \
+  --version 2.1.0+0 --slot-size 0x70000 \
+  build/firmware.bin build/firmware_signed.bin
 
-# Generate new artifacts
-/firmware-update generate --context ./src
+# Verify signed image
+imgtool verify --key signing-key.pem build/firmware_signed.bin
 
-# Validate against best practices
-/firmware-update validate --verbose
-
-# Generate documentation
-/firmware-update document --format markdown
+# Flash bootloader + signed app
+openocd -f interface/stlink.cfg -f target/stm32f4x.cfg \
+  -c "program mcuboot.bin 0x08000000 verify" \
+  -c "program firmware_signed.bin 0x08010000 verify reset exit"
 ```
+
+### MQTT OTA state machine (pseudocode)
+```
+IDLE:
+  on(topic "ota/start", {size, sha256}):
+    erase_bank_b()
+    start_sha256_context()
+    state = DOWNLOADING
+    offset = 0
+
+DOWNLOADING:
+  on(topic "ota/chunk", {offset, data}):
+    if offset != expected: send NAK, return
+    write_to_bank_b(offset, data)
+    sha256_update(data)
+    expected += len(data)
+    if expected == size: state = VERIFYING
+
+VERIFYING:
+  sha256_final() == sha256 ? state = REBOOTING : state = ERROR
+
+REBOOTING:
+  set_boot_flag(BANK_B)
+  reset()
+```
+
+## Error Handling
+
+- "Image too large for slot" — check `--slot-size` matches your flash layout
+- "Signature verification failed" — key mismatch between signing tool and bootloader public key
+- "OTA abort: CRC mismatch" — corruption during transfer; request retransmit from offset
+- "Stuck in rollback loop" — self-test always fails; check peripheral init before calling confirm

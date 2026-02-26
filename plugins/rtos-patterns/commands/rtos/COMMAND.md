@@ -1,87 +1,111 @@
 # /rtos
 
-A quick-access command for rtos-patterns workflows in Claude Code.
+FreeRTOS task design, synchronization, and analysis command.
 
 ## Trigger
 
-`/rtos [action] [options]`
+`/rtos <action> [options]`
 
-## Input
+## Actions
 
-### Actions
-- `analyze` - Analyze existing rtos-patterns implementation
-- `generate` - Generate new rtos-patterns artifacts
-- `improve` - Suggest improvements to current implementation
-- `validate` - Check implementation against best practices
-- `document` - Generate documentation for rtos-patterns artifacts
+### `design`
+Design a task architecture from a list of system functions.
 
-### Options
-- `--context <path>` - Specify the file or directory to operate on
-- `--format <type>` - Output format (markdown, json, yaml)
-- `--verbose` - Include detailed explanations
-- `--dry-run` - Preview changes without applying them
+```
+/rtos design --functions "sensor-read,filter,control,comms,display,logging"
+/rtos design --functions "adc,uart-rx,protocol,ui" --priority-method rm
+```
+
+Outputs: task table (name, priority, stack, period), queue/semaphore/mutex diagram.
+
+### `create`
+Generate task, queue, and synchronization code.
+
+```
+/rtos create --task sensor --period 100ms --queue adc_reading --depth 8
+/rtos create --mutex i2c_bus --shared-by "sensor,display"
+/rtos create --event-group startup --bits "sensor,comm,config"
+```
+
+### `debug`
+Diagnose a FreeRTOS issue.
+
+```
+/rtos debug --symptom "task starved"
+/rtos debug --symptom "deadlock between task1 and task2"
+/rtos debug --symptom "HardFault in ISR"
+/rtos debug --cfsr 0x02000000
+```
+
+### `analyze`
+Analyze a FreeRTOS configuration for issues.
+
+```
+/rtos analyze --config FreeRTOSConfig.h
+/rtos analyze --priorities "sensor=9,comm=5,display=3" --check-inversion
+```
 
 ## Process
 
-### Step 1: Context Gathering
-- Read relevant files and configuration
-- Identify the current state of rtos-patterns artifacts
-- Determine applicable standards and conventions
+1. List all concurrent activities in the system.
+2. Group into tasks by period or event source.
+3. Assign priorities using Rate Monotonic (by period) or deadline.
+4. Identify shared resources: assign mutex per resource.
+5. Identify ISR → task signals: assign binary semaphore or task notification.
+6. Size queues: queue_depth = max_burst_rate / consumer_rate * 1.5 (50% headroom).
 
-### Step 2: Analysis
-- Evaluate against rtos-patterns patterns
-- Identify gaps, issues, and opportunities
-- Prioritize findings by impact and effort
+## Output Examples
 
-### Step 3: Execution
-- Apply the requested action
-- Generate or modify artifacts as needed
-- Validate changes against requirements
+### Minimal FreeRTOS task scaffold
+```c
+/* sensor_task.c */
+#define SENSOR_TASK_STACK  256U
+#define SENSOR_TASK_PRIO   9U
 
-### Step 4: Output
-- Present results in the requested format
-- Include actionable next steps
-- Flag any items requiring human decision
+static StackType_t  s_stack[SENSOR_TASK_STACK];
+static StaticTask_t s_tcb;
+static TaskHandle_t s_handle;
 
-## Output
+static void sensor_task_fn(void *arg)
+{
+    (void)arg;
+    TickType_t last_wake = xTaskGetTickCount();
 
-### Success
-```
-## Rtos Patterns - [Action] Complete
+    for (;;) {
+        sensor_reading_t r;
+        r.temp_mC = sensor_read_temperature();
+        r.ts_ms   = pdTICKS_TO_MS(xTaskGetTickCount());
 
-### Changes Made
-- [List of changes]
+        xQueueSend(q_sensor_out, &r, 0);  /* Non-blocking send */
 
-### Validation
-- [Checks passed]
+        vTaskDelayUntil(&last_wake, pdMS_TO_TICKS(100));
+    }
+}
 
-### Next Steps
-- [Recommended follow-up actions]
-```
-
-### Error
-```
-## Rtos Patterns - [Action] Failed
-
-### Issue
-[Description of the problem]
-
-### Suggested Fix
-[How to resolve the issue]
+void sensor_task_start(void)
+{
+    s_handle = xTaskCreateStatic(sensor_task_fn, "sensor",
+                                  SENSOR_TASK_STACK, NULL,
+                                  SENSOR_TASK_PRIO, s_stack, &s_tcb);
+    configASSERT(s_handle != NULL);
+}
 ```
 
-## Examples
-
-```bash
-# Analyze current implementation
-/rtos analyze
-
-# Generate new artifacts
-/rtos generate --context ./src
-
-# Validate against best practices
-/rtos validate --verbose
-
-# Generate documentation
-/rtos document --format markdown
+### Priority check using vTaskList
+```c
+/* In debug build: print all task states */
+void rtos_print_task_list(void)
+{
+    char buf[512];
+    vTaskList(buf);
+    printf("Name\t\tState\tPrio\tStack\tNum\n%s\n", buf);
+    /* State: R=Ready, B=Blocked, S=Suspended, D=Deleted */
+}
 ```
+
+## Error Handling
+
+- "xQueueSend returned pdFALSE immediately" — queue full; increase depth or increase consumer priority
+- "Task never runs" — lower-priority task starving; check for a higher-priority task spinning without yielding
+- "Deadlock: task1 and task2 both blocked" — mutual lock acquisition in different order; always acquire locks in same global order
+- "Mutex not released" — task that holds mutex was deleted or vTaskSuspend called while holding; never suspend while holding mutex

@@ -1,87 +1,91 @@
 # /embedded-linux
 
-A quick-access command for embedded-linux workflows in Claude Code.
+Embedded Linux command: Yocto/Buildroot builds, device tree, kernel modules, cross-compilation.
 
 ## Trigger
 
-`/embedded-linux [action] [options]`
+`/embedded-linux <action> [options]`
 
-## Input
+## Actions
 
-### Actions
-- `analyze` - Analyze existing embedded-linux implementation
-- `generate` - Generate new embedded-linux artifacts
-- `improve` - Suggest improvements to current implementation
-- `validate` - Check implementation against best practices
-- `document` - Generate documentation for embedded-linux artifacts
+### `build`
+Generate Yocto or Buildroot configuration for a target.
 
-### Options
-- `--context <path>` - Specify the file or directory to operate on
-- `--format <type>` - Output format (markdown, json, yaml)
-- `--verbose` - Include detailed explanations
-- `--dry-run` - Preview changes without applying them
+```
+/embedded-linux build --bsp imx6ul --distro yocto --image core-image-minimal
+/embedded-linux build --bsp raspberrypi4 --distro yocto --image core-image-full-cmdline
+/embedded-linux build --target stm32mp157 --system buildroot --libc musl
+```
+
+### `flash`
+Generate flashing commands for the target.
+
+```
+/embedded-linux flash --tool bmaptool --image core-image-minimal-imx6ul.wic.bmap
+/embedded-linux flash --tool dd --image sdcard.img --device /dev/sdb
+/embedded-linux flash --tool u-boot-tftp --ip 192.168.1.100
+```
+
+### `module`
+Generate a Linux kernel module skeleton.
+
+```
+/embedded-linux module --type platform --name mydriver --bus i2c
+/embedded-linux module --type char --name mychar --major 240
+/embedded-linux module --type spi --name myspi --compatible "myorg,mysensor"
+```
+
+### `debug`
+Generate debug commands for a running embedded Linux system.
+
+```
+/embedded-linux debug --dmesg-filter mydriver
+/embedded-linux debug --sysfs-path /sys/bus/i2c/devices/
+/embedded-linux debug --ftrace-function mydev_probe
+```
 
 ## Process
 
-### Step 1: Context Gathering
-- Read relevant files and configuration
-- Identify the current state of embedded-linux artifacts
-- Determine applicable standards and conventions
+1. Confirm target SoC and available BSP layers.
+2. Set `MACHINE` and `DISTRO` in `local.conf`.
+3. Create a custom layer for project-specific recipes.
+4. Use `devtool` for iterative recipe development.
+5. Test with QEMU before physical hardware when possible.
 
-### Step 2: Analysis
-- Evaluate against embedded-linux-patterns patterns
-- Identify gaps, issues, and opportunities
-- Prioritize findings by impact and effort
+## Output Examples
 
-### Step 3: Execution
-- Apply the requested action
-- Generate or modify artifacts as needed
-- Validate changes against requirements
-
-### Step 4: Output
-- Present results in the requested format
-- Include actionable next steps
-- Flag any items requiring human decision
-
-## Output
-
-### Success
-```
-## Embedded Linux - [Action] Complete
-
-### Changes Made
-- [List of changes]
-
-### Validation
-- [Checks passed]
-
-### Next Steps
-- [Recommended follow-up actions]
-```
-
-### Error
-```
-## Embedded Linux - [Action] Failed
-
-### Issue
-[Description of the problem]
-
-### Suggested Fix
-[How to resolve the issue]
-```
-
-## Examples
-
+### local.conf additions
 ```bash
-# Analyze current implementation
-/embedded-linux analyze
-
-# Generate new artifacts
-/embedded-linux generate --context ./src
-
-# Validate against best practices
-/embedded-linux validate --verbose
-
-# Generate documentation
-/embedded-linux document --format markdown
+# Build directory: conf/local.conf
+MACHINE = "imx6ul-var-dart"
+DISTRO = "poky"
+BB_NUMBER_THREADS ?= "${@oe.utils.cpu_count()}"
+PARALLEL_MAKE ?= "-j ${@oe.utils.cpu_count()}"
+PACKAGE_CLASSES = "package_ipk"
+EXTRA_IMAGE_FEATURES ?= "debug-tweaks ssh-server-openssh"
+IMAGE_INSTALL:append = " myapp htop strace"
 ```
+
+### Device tree overlay apply (runtime)
+```bash
+# On target (overlayfs mounted at /boot/overlays/)
+dtoverlay mysensor-overlay
+# or via U-Boot:
+setenv fdtoverlays /overlays/mysensor-overlay.dtbo
+```
+
+### Ftrace function tracing
+```bash
+# On target:
+echo mydev_probe > /sys/kernel/debug/tracing/set_ftrace_filter
+echo function > /sys/kernel/debug/tracing/current_tracer
+echo 1 > /sys/kernel/debug/tracing/tracing_on
+cat /sys/kernel/debug/tracing/trace
+```
+
+## Error Handling
+
+- "do_fetch: No such file" — check `SRC_URI` and `SRCREV`; use `BB_STRICT_CHECKSUM = "0"` only during development
+- "ERROR: QA Issue" — recipe install paths wrong; check `D` variable vs `bindir`/`libdir`
+- "Module not found" — check `MODULES_INSTALL_DIRS` and `depmod` ran during image build
+- "DT: of_device_id table not found" — `compatible` string mismatch between DTS and driver

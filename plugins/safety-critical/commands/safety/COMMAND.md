@@ -1,87 +1,104 @@
 # /safety
 
-A quick-access command for safety-critical workflows in Claude Code.
+Safety-critical firmware command: MISRA analysis, defensive patterns, watchdog, certification.
 
 ## Trigger
 
-`/safety [action] [options]`
+`/safety <action> [options]`
 
-## Input
+## Actions
 
-### Actions
-- `analyze` - Analyze existing safety-critical implementation
-- `generate` - Generate new safety-critical artifacts
-- `improve` - Suggest improvements to current implementation
-- `validate` - Check implementation against best practices
-- `document` - Generate documentation for safety-critical artifacts
+### `analyze`
+Analyze C code for MISRA violations and safety issues.
 
-### Options
-- `--context <path>` - Specify the file or directory to operate on
-- `--format <type>` - Output format (markdown, json, yaml)
-- `--verbose` - Include detailed explanations
-- `--dry-run` - Preview changes without applying them
+```
+/safety analyze --file src/motor_control.c --ruleset misra-2012
+/safety analyze --dir src/ --level required-mandatory --output report.txt
+```
+
+### `enforce`
+Rewrite a function to be MISRA compliant.
+
+```
+/safety enforce --function process_command --rule 15.5
+/safety enforce --function set_register --rule 11.3
+```
+
+### `report`
+Generate a deviation report for a known violation.
+
+```
+/safety report --rule 11.5 --file hal_wrapper.c --line 42 --reason "HAL requires void*"
+```
+
+### `certify`
+Generate a certification evidence checklist.
+
+```
+/safety certify --standard iec-61508 --sil 2
+/safety certify --standard do-178c --dal B
+```
 
 ## Process
 
-### Step 1: Context Gathering
-- Read relevant files and configuration
-- Identify the current state of safety-critical artifacts
-- Determine applicable standards and conventions
+1. Identify applicable safety standard and required integrity level.
+2. Configure static analysis tool with the MISRA ruleset.
+3. Run analysis on all source files.
+4. Categorize violations: fix immediately (mandatory) or document deviation (required/advisory).
+5. Write deviation records for each documented suppression.
+6. Verify 100% statement coverage with gcov or Polyspace.
 
-### Step 2: Analysis
-- Evaluate against safety-critical-patterns patterns
-- Identify gaps, issues, and opportunities
-- Prioritize findings by impact and effort
+## Output Examples
 
-### Step 3: Execution
-- Apply the requested action
-- Generate or modify artifacts as needed
-- Validate changes against requirements
-
-### Step 4: Output
-- Present results in the requested format
-- Include actionable next steps
-- Flag any items requiring human decision
-
-## Output
-
-### Success
-```
-## Safety Critical - [Action] Complete
-
-### Changes Made
-- [List of changes]
-
-### Validation
-- [Checks passed]
-
-### Next Steps
-- [Recommended follow-up actions]
-```
-
-### Error
-```
-## Safety Critical - [Action] Failed
-
-### Issue
-[Description of the problem]
-
-### Suggested Fix
-[How to resolve the issue]
-```
-
-## Examples
-
+### cppcheck MISRA check
 ```bash
-# Analyze current implementation
-/safety analyze
-
-# Generate new artifacts
-/safety generate --context ./src
-
-# Validate against best practices
-/safety validate --verbose
-
-# Generate documentation
-/safety document --format markdown
+# Install: pip install cppcheck (or package manager)
+cppcheck --enable=all --std=c11 \
+    --addon=misra.json \
+    --suppressions-list=misra_suppressions.txt \
+    --xml --xml-version=2 \
+    src/ 2> misra_report.xml
 ```
+
+### MISRA deviation log entry
+```
+Deviation Record: DEV-2024-011
+Rule:        MISRA C:2012 Rule 11.5
+File:        src/hal_wrapper.c, line 42
+Violation:   Cast from void* to SPI_HandleTypeDef*
+Justification: STM32 HAL API requires void* parameter. Type is
+               verified by handle initialization in MX_SPI1_Init().
+Risk:        Low. Type mismatch would cause fault at initialization,
+             not silently at runtime.
+Test:        TC-HAL-001: SPI loopback test verifies correct operation.
+Approved:    J. Smith, 2024-03-15
+```
+
+### Safety startup checks
+```c
+void safety_startup_checks(void)
+{
+    /* 1. RAM integrity */
+    extern uint32_t _sram_test_start, _sram_test_end;
+    if (!ram_march_c_test(&_sram_test_start, &_sram_test_end)) {
+        safety_fault(FAULT_RAM_TEST_FAIL);
+    }
+
+    /* 2. Flash CRC */
+    extern uint32_t _flash_crc_stored;
+    uint32_t computed = crc32_compute(_flash_start, _flash_size);
+    if (computed != _flash_crc_stored) {
+        safety_fault(FAULT_FLASH_CORRUPTION);
+    }
+
+    /* 3. Stack guard region */
+    mpu_protect_stack_bottom((uint32_t)_stack_guard_base);
+}
+```
+
+## Error Handling
+
+- "MISRA 10.3: essential type category mismatch" — add explicit cast with comment explaining the conversion
+- "MISRA 15.5: multiple exit points" — refactor to single-exit with status variable
+- "Polyspace: potential overflow on line X" — add range check before arithmetic
+- "PC-lint 9087: suspicious pointer-to-pointer conversion" — add suppression comment with deviation record
