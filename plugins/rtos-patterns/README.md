@@ -62,3 +62,10 @@ The rtos-patterns plugin gives you:
 - It assumes you've measured worst-case ISR duration. If you haven't, it will tell you to.
 - It does not analyze your actual code for priority inversion (that requires static analysis tooling — the agent will reference Tracealyzer and Percepio if you need that depth).
 - It does not certify your design — safety-critical systems need formal verification, which is what the `safety-critical` plugin is for.
+
+## Install
+
+```text
+/plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code
+/plugin install rtos-patterns@libre-embed
+```

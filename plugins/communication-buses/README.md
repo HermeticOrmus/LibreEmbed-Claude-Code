@@ -51,3 +51,10 @@ The communication-buses plugin gives you:
 - It will not write a complete driver from scratch — it generates structure + init + key methods + the reasoning, and you finish the implementation.
 - It does not run on your hardware. Signal-level issues (impedance, timing) require an oscilloscope; the agent recommends the measurement approach but can't replace the scope.
 - For very high-speed serial (gigabit ethernet, MIPI CSI, MIPI DSI), the patterns shift to PHY + MAC concerns the agent covers more lightly.
+
+## Install
+
+```text
+/plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code
+/plugin install communication-buses@libre-embed
+```

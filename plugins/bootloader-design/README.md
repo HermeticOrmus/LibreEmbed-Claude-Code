@@ -15,7 +15,7 @@ Bootloader architecture, firmware update mechanisms, secure boot
 
 ## Quick Start
 
-1. Copy this plugin to your Claude Code plugins directory
+1. Install it: `/plugin install bootloader-design@libre-embed` (after `/plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code`)
 2. Use the agent for guided, multi-step workflows
 3. Use the command for quick, targeted operations
 4. Reference the skill for patterns and best practices
