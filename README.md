@@ -151,6 +151,23 @@ claude plugin install rtos-patterns@libre-embed
 
 The safety hooks are a separate, optional plugin: `/plugin install libre-embed-hooks@libre-embed` (or `claude plugin install libre-embed-hooks@libre-embed`).
 
+### Install in Grok Build
+
+Grok Build loads the same plugin folders. Add the marketplace and install a plugin from a terminal:
+
+```bash
+grok plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code
+grok plugin install rtos-patterns@libre-embed
+```
+
+Or install one plugin straight from its folder, with no marketplace:
+
+```bash
+grok plugin install HermeticOrmus/LibreEmbed-Claude-Code#plugins/rtos-patterns
+```
+
+From a clone, `./setup.sh --grok` installs every plugin through the `grok` CLI; `--only`, `--list`, and `--uninstall` work the same way. The `libre-embed-hooks` plugin uses a hook format Grok Build supports, but it has not been verified in a live Grok session yet.
+
 ### Install everything with setup.sh
 
 ```bash
@@ -215,6 +232,7 @@ OTA updates that don't brick devices. Watchdog patterns that catch real failures
 ## Compatibility
 
 - **Claude Code**: a release with plugin marketplaces (`/plugin`); this release was verified with Claude Code 2.1.285. `setup.sh` and the hooks plugin also need `jq`.
+- **Grok Build**: `grok` 1.0.44 validates and installs all 16 plugins. The hooks plugin is unverified in a live Grok session.
 - **Toolchains**: GCC ARM (any recent version), Clang/LLVM with embedded targets, Zephyr SDK, ESP-IDF, STM32CubeIDE, Microchip XC32, Renesas e² studio
 - **MCU families covered**: ARM Cortex-M0/M0+/M3/M4/M7/M33 (STM32, NXP LPC + Kinetis + i.MX RT, Nordic nRF, Microchip SAM, RP2040, ESP32, Renesas RA), MSP430 (light), AVR (light)
 - **RTOS coverage**: FreeRTOS (deep), Zephyr (deep), ThreadX (moderate), RT-Thread (light)

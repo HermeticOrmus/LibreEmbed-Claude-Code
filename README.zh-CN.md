@@ -151,6 +151,23 @@ claude plugin install rtos-patterns@libre-embed
 
 安全钩子是一个独立的可选插件：`/plugin install libre-embed-hooks@libre-embed`（或 `claude plugin install libre-embed-hooks@libre-embed`）。
 
+### 在 Grok Build 中安装
+
+Grok Build 加载的是同样的插件目录。在终端中添加插件市场并安装插件：
+
+```bash
+grok plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code
+grok plugin install rtos-patterns@libre-embed
+```
+
+也可以不经过插件市场，直接从插件目录安装单个插件：
+
+```bash
+grok plugin install HermeticOrmus/LibreEmbed-Claude-Code#plugins/rtos-patterns
+```
+
+在本地克隆中，`./setup.sh --grok` 会通过 `grok` CLI 安装全部插件；`--only`、`--list` 和 `--uninstall` 的用法不变。`libre-embed-hooks` 插件使用的钩子格式 Grok Build 支持，但尚未在真实的 Grok 会话中验证。
+
 ### 用 setup.sh 一次安装全部
 
 ```bash
@@ -215,6 +232,7 @@ cd ~/projects/LibreEmbed-Claude-Code
 ## 兼容性
 
 - **Claude Code**：支持插件市场（`/plugin`）的版本；本次发布已在 Claude Code 2.1.285 上验证。`setup.sh` 和钩子插件还需要 `jq`。
+- **Grok Build**：`grok` 1.0.44 可以校验并安装全部 16 个插件。钩子插件尚未在真实的 Grok 会话中验证。
 - **工具链**：GCC ARM（任何较新版本）、带嵌入式目标的 Clang/LLVM、Zephyr SDK、ESP-IDF、STM32CubeIDE、Microchip XC32、Renesas e² studio
 - **覆盖的 MCU 系列**：ARM Cortex-M0/M0+/M3/M4/M7/M33（STM32、NXP LPC + Kinetis + i.MX RT、Nordic nRF、Microchip SAM、RP2040、ESP32、Renesas RA），MSP430（少量），AVR（少量）
 - **RTOS 覆盖**：FreeRTOS（深入）、Zephyr（深入）、ThreadX（中等）、RT-Thread（少量）
