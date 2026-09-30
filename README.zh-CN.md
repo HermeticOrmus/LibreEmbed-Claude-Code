@@ -248,6 +248,8 @@ LibreEmbed 不会回传任何数据，除了工具链本身需要的账号之外
 
 觉得有用并点了 Star？告诉我们哪些好用、还缺什么：[提交反馈 issue](https://github.com/HermeticOrmus/LibreEmbed-Claude-Code/issues/new?template=feedback.yml)。每一条反馈都会得到回复，由反馈带来的改动会在发布说明中致谢。
 
+我们发现并修补过的裂痕：[LEDGER.md](LEDGER.md)（英文）。
+
 ---
 
 ## 贡献入口
