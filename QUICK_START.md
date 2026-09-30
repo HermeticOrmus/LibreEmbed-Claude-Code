@@ -20,19 +20,30 @@ If you don't have hardware yet: an STM32 Nucleo-64 board (any flavor) is ~$15, h
 
 ## 1. Clone + install
 
+Inside Claude Code, add the marketplace and install what this walkthrough uses:
+
+```text
+/plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code
+/plugin install rtos-patterns@libre-embed
+/plugin install arm-cortex-m@libre-embed
+/plugin install communication-buses@libre-embed
+```
+
+Or clone and install everything from a terminal:
+
 ```bash
 git clone https://github.com/HermeticOrmus/LibreEmbed-Claude-Code.git ~/projects/LibreEmbed-Claude-Code
 cd ~/projects/LibreEmbed-Claude-Code
 ./setup.sh
 ```
 
-`setup.sh` copies all 15 plugins into `~/.claude/plugins/` (or wherever your Claude Code plugin dir is). Re-run anytime to refresh.
+`setup.sh` registers the checkout as the `libre-embed` marketplace and installs all 15 plugins plus the optional `libre-embed-hooks` through the Claude Code CLI (it needs `claude` and `jq` on your `PATH`). Restart Claude Code afterwards.
 
 Confirm:
 
 ```bash
-ls ~/.claude/plugins/ | grep -c '^libre-embed-'
-# Should print 15
+claude plugin list | grep -c '@libre-embed'
+# Should print 16 after ./setup.sh (15 plugins plus libre-embed-hooks)
 ```
 
 ## 2. Open Claude Code at your firmware project root
@@ -95,7 +106,7 @@ Expected reasoning chain:
 
 The bundle does NOT auto-flash. That's intentional — flashing untested firmware can brick devices. The plugins suggest flash commands but you run them.
 
-A pre-tool-use hook is installed by `setup.sh` that warns before any `arm-none-eabi-` or `openocd` or `st-flash` command. Disable with `--no-safety-hooks` if you find it annoying.
+`setup.sh` also installs the optional `libre-embed-hooks` plugin. Its pre-tool-use hook asks for confirmation before flash and erase commands (OpenOCD `program`, `st-flash write`, `west flash`, `idf.py flash`, `pyocd flash`, and others) and before a file tool touches key or secret files. Skip it with `./setup.sh --no-safety-hooks`, or turn it off later with `claude plugin disable libre-embed-hooks@libre-embed`.
 
 ## Iterating
 
@@ -115,7 +126,7 @@ The pattern across all 15 plugins is the same:
 ## Troubleshooting
 
 - Agent answer is generic / not embedded-specific → `setup.sh` failed; re-run + verify
-- `/rtos` not recognized → plugins copied but Claude Code wasn't reloaded; restart Claude Code
+- `/rtos` not recognized → plugins installed but Claude Code wasn't restarted; restart it, then check `claude plugin list`
 - All commands work but agents are too brief → you may have an older Claude Code build; agent-mode requires Claude Code v1.x+
 
 For other issues: [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
