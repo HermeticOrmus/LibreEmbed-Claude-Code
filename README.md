@@ -17,6 +17,8 @@
   <img src="https://img.shields.io/badge/Claude_Code-aa8142?style=flat-square&logo=anthropic&logoColor=white" alt="Claude Code" />
 </p>
 
+English | [简体中文](README.zh-CN.md)
+
 ---
 
 > **Skills, agents, commands, and workflows for embedded systems development with Claude Code.**
@@ -41,12 +43,12 @@ Embedded development has resisted that refactor longer than most domains. The re
 
 | Claude Code component | LibreEmbed provides |
 |---|---|
-| **Plugins** | 15 domain plugins (RTOS, ARM Cortex-M, comm buses, IoT, FPGA, safety-critical, more) |
+| **Plugins** | 15 domain plugins (RTOS, ARM Cortex-M, comm buses, IoT, FPGA, safety-critical, more), installed from one marketplace named `libre-embed` |
 | **Agents** | Domain-specialist agents for each plugin — e.g., RTOS engineer, ARM Cortex-M expert, IoT protocol designer |
 | **Commands** | Quick-access slash commands per plugin (`/rtos`, `/comm-bus`, `/iot`, `/cortex-m`, etc.) |
 | **Skills** | Reusable pattern libraries — calibration routines, sensor fusion, bootloader patterns, OTA workflows |
-| **Hooks** | Pre/post tool hooks for safety nets (e.g., warn before flashing untested code) |
-| **Templates** | Project scaffolds, CLAUDE.md per plugin, Makefile + linker script starting points |
+| **Hooks** | Pre/post tool hooks for safety nets, packaged as the optional `libre-embed-hooks` plugin: asks before flash, erase, and secret-file operations |
+| **Templates** | A project `CLAUDE.md` scaffold (`templates/CLAUDE.md`) |
 
 ---
 
@@ -54,8 +56,9 @@ Embedded development has resisted that refactor longer than most domains. The re
 
 ```
 LibreEmbed-Claude-Code/
-├── 15 plugins              # one per embedded subdomain
-│   ├── arm-cortex-m       # ARM Cortex-M0/M3/M4/M7/M33 programming
+├── .claude-plugin/         # marketplace.json for the libre-embed marketplace
+├── plugins/                # 15 plugins, one per embedded subdomain, plus libre-embed-hooks
+│   ├── arm-cortex-m        # ARM Cortex-M0/M3/M4/M7/M33 programming
 │   ├── bare-metal          # Register manipulation, linker scripts, minimal runtime
 │   ├── bootloader-design   # Bootloader architecture, secure boot, A/B partitions
 │   ├── communication-buses # I2C, SPI, UART, CAN, USB protocols + drivers
@@ -69,10 +72,11 @@ LibreEmbed-Claude-Code/
 │   ├── power-management    # Sleep modes, power budgeting, energy harvesting
 │   ├── rtos-patterns       # FreeRTOS, Zephyr, task design, IPC, priority inversion
 │   ├── safety-critical     # IEC 61508, DO-178C, MISRA C, certification patterns
-│   └── sensor-integration  # Driver bring-up, calibration, filtering, fusion
-├── 3 learning paths        # beginner → intermediate → advanced
-├── templates               # Per-project CLAUDE.md, Makefile, linker, devicetree
-└── hooks                   # Safety hooks (flash-warning, secret-scrub, etc.)
+│   ├── sensor-integration  # Driver bring-up, calibration, filtering, fusion
+│   └── libre-embed-hooks   # Optional safety hooks: confirm flash, erase, and secret-file operations
+├── learning-paths/         # 3 learning paths: beginner → intermediate → advanced
+├── templates/              # Project CLAUDE.md scaffold
+└── setup.sh                # Installs the plugins through the Claude Code CLI
 ```
 
 ---
@@ -85,63 +89,100 @@ Each plugin ships an **agent** (specialist persona with deep domain knowledge), 
 
 | Plugin | Agent / Command | What it does |
 |---|---|---|
-| **arm-cortex-m** | `/cortex-m` | CMSIS, HAL vs. LL, startup code, vector table, MPU configuration, MMU on Cortex-A boundaries. ARM Cortex-M0+/M3/M4/M7/M33. |
-| **bare-metal** | `/bare-metal` | Register-level programming, linker scripts, minimal runtime (no libc), C++ on embedded, freestanding builds. |
-| **memory-management** | `/memory` | Static allocation strategies, memory pools, stack analysis via GCC `-fstack-usage`, heap-less design, fragmentation patterns. |
-| **power-management** | `/power` | Sleep modes (run / sleep / stop / standby), peripheral clock gating, wake sources, power budgeting, energy harvesting designs. |
+| **arm-cortex-m** | `cortex-m-engineer` / `/cortex-m` | CMSIS, HAL vs. LL, startup code, vector table, MPU configuration, MMU on Cortex-A boundaries. ARM Cortex-M0+/M3/M4/M7/M33. |
+| **bare-metal** | `bare-metal-engineer` / `/bare-metal` | Register-level programming, linker scripts, minimal runtime (no libc), C++ on embedded, freestanding builds. |
+| **memory-management** | `memory-engineer` / `/memory` | Static allocation strategies, memory pools, stack analysis via GCC `-fstack-usage`, heap-less design, fragmentation patterns. |
+| **power-management** | `power-engineer` / `/power` | Sleep modes (run / sleep / stop / standby), peripheral clock gating, wake sources, power budgeting, energy harvesting designs. |
 
 ### Communication + I/O
 
 | Plugin | Agent / Command | What it does |
 |---|---|---|
-| **communication-buses** | `/comm-bus` | I2C (master/slave, clock stretching, multi-master), SPI (modes, DMA, CS handling), UART (DMA, ring buffers, flow control), CAN (frame format, filters, error states), USB CDC/HID. |
-| **sensor-integration** | `/sensor` | Sensor driver bring-up, factory calibration, Allan variance, complementary + Kalman filtering, sensor fusion (IMU + magnetometer + GPS). |
-| **iot-protocols** | `/iot` | MQTT (QoS levels, retained messages, LWT), CoAP, LwM2M device management, BLE GATT, LoRaWAN class A/B/C, Zigbee, Thread. |
+| **communication-buses** | `bus-driver-engineer` / `/comm-bus` | I2C (master/slave, clock stretching, multi-master), SPI (modes, DMA, CS handling), UART (DMA, ring buffers, flow control), CAN (frame format, filters, error states), USB CDC/HID. |
+| **sensor-integration** | `sensor-engineer` / `/sensor` | Sensor driver bring-up, factory calibration, Allan variance, complementary + Kalman filtering, sensor fusion (IMU + magnetometer + GPS). |
+| **iot-protocols** | `iot-protocol-engineer` / `/iot` | MQTT (QoS levels, retained messages, LWT), CoAP, LwM2M device management, BLE GATT, LoRaWAN class A/B/C, Zigbee, Thread. |
 
 ### Runtime + system
 
 | Plugin | Agent / Command | What it does |
 |---|---|---|
-| **rtos-patterns** | `/rtos` | FreeRTOS + Zephyr task design, IPC primitives (queues, mutexes, semaphores, event groups), priority inversion + inheritance, watchdog patterns, deferred interrupt processing. |
-| **embedded-linux** | `/embedded-linux` | Yocto + Buildroot, device tree authoring, kernel module patterns, init systems (systemd vs. OpenRC vs. BusyBox init), userspace driver patterns. |
-| **bootloader-design** | `/bootloader` | First-stage vs. second-stage bootloaders, secure boot chains, signature verification, A/B partition designs, fail-safe rollback, ROM bootloader interaction. |
-| **firmware-update** | `/firmware-update` | OTA update protocols, dual-bank flash, delta updates (bsdiff/Heatshrink), version negotiation, anti-rollback, signed-by-vendor enforcement. |
+| **rtos-patterns** | `rtos-engineer` / `/rtos` | FreeRTOS + Zephyr task design, IPC primitives (queues, mutexes, semaphores, event groups), priority inversion + inheritance, watchdog patterns, deferred interrupt processing. |
+| **embedded-linux** | `embedded-linux-engineer` / `/embedded-linux` | Yocto + Buildroot, device tree authoring, kernel module patterns, init systems (systemd vs. OpenRC vs. BusyBox init), userspace driver patterns. |
+| **bootloader-design** | `bootloader-engineer` / `/bootloader` | First-stage vs. second-stage bootloaders, secure boot chains, signature verification, A/B partition designs, fail-safe rollback, ROM bootloader interaction. |
+| **firmware-update** | `fota-engineer` / `/firmware-update` | OTA update protocols, dual-bank flash, delta updates (bsdiff/Heatshrink), version negotiation, anti-rollback, signed-by-vendor enforcement. |
 
 ### Hardware-software integration
 
 | Plugin | Agent / Command | What it does |
 |---|---|---|
-| **fpga-integration** | `/fpga` | MCU + FPGA designs, AXI bus integration, soft-core CPUs (RISC-V on FPGA), DMA across the boundary, HDL basics for the embedded developer. |
-| **debug-trace** | `/debug-embedded` | JTAG + SWD setup, OpenOCD + pyOCD, ITM (Instrumentation Trace Macrocell), ETM (Embedded Trace Macrocell), printf-over-SWO, logic analyzer captures, oscilloscope vs. logic analyzer trade-offs. |
+| **fpga-integration** | `fpga-engineer` / `/fpga` | MCU + FPGA designs, AXI bus integration, soft-core CPUs (RISC-V on FPGA), DMA across the boundary, HDL basics for the embedded developer. |
+| **debug-trace** | `debug-engineer` / `/debug-embedded` | JTAG + SWD setup, OpenOCD + pyOCD, ITM (Instrumentation Trace Macrocell), ETM (Embedded Trace Macrocell), printf-over-SWO, logic analyzer captures, oscilloscope vs. logic analyzer trade-offs. |
 
 ### Quality + compliance
 
 | Plugin | Agent / Command | What it does |
 |---|---|---|
-| **embedded-testing** | `/embedded-test` | On-target unit tests (Unity, CMocka, Ceedling), Hardware-in-the-Loop (HIL) test rigs, hardware peripheral mocks, golden-image regression, CI for embedded. |
-| **safety-critical** | `/safety` | IEC 61508 SIL levels, DO-178C aviation, ISO 26262 automotive, MISRA C compliance, formal verification basics, freedom-from-interference. |
+| **embedded-testing** | `embedded-test-engineer` / `/embedded-test` | On-target unit tests (Unity, CMocka, Ceedling), Hardware-in-the-Loop (HIL) test rigs, hardware peripheral mocks, golden-image regression, CI for embedded. |
+| **safety-critical** | `safety-engineer` / `/safety` | IEC 61508 SIL levels, DO-178C aviation, ISO 26262 automotive, MISRA C compliance, formal verification basics, freedom-from-interference. |
+
+### Optional safety hooks
+
+| Plugin | Hooks | What it does |
+|---|---|---|
+| **libre-embed-hooks** | SessionStart, PreToolUse, PostToolUse | Asks before flash and erase commands (OpenOCD `program`, `st-flash write`, `west flash`, `idf.py flash`, `pyocd flash`, `nrfjprog --program`, and more) and before a file tool touches `.env`, `.pem`, `.key`, credentials, or secrets files. Prints one context line when a session opens in a firmware project, and flags a file left empty by an edit. No agents, no logs. See [its README](plugins/libre-embed-hooks/README.md). |
 
 ---
 
 ## Quick start
 
+### Install from Claude Code
+
+```text
+/plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code
+/plugin install rtos-patterns@libre-embed
+```
+
+Install any of the 15 plugins the same way, `/plugin install <plugin>@libre-embed` with a name from the tables above, then restart Claude Code. From a terminal the same two steps are:
+
+```bash
+claude plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code
+claude plugin install rtos-patterns@libre-embed
+```
+
+The safety hooks are a separate, optional plugin: `/plugin install libre-embed-hooks@libre-embed` (or `claude plugin install libre-embed-hooks@libre-embed`).
+
+### Install everything with setup.sh
+
 ```bash
 # Clone
 git clone https://github.com/HermeticOrmus/LibreEmbed-Claude-Code.git ~/projects/LibreEmbed-Claude-Code
 
-# Install all 15 plugins into Claude Code
+# Install all 15 plugins plus libre-embed-hooks into Claude Code
 cd ~/projects/LibreEmbed-Claude-Code
 ./setup.sh
 
 # Or install just the plugins you need
 ./setup.sh --only rtos-patterns,communication-buses,iot-protocols
+
+# List the plugins, skip the hooks plugin, or remove the pack
+./setup.sh --list
+./setup.sh --no-safety-hooks
+./setup.sh --uninstall
 ```
+
+`setup.sh` needs the `claude` CLI and `jq`. It registers the checkout as the `libre-embed` marketplace and runs `claude plugin install` for each plugin, so it installs exactly what the `/plugin` commands install. All fifteen together add about 4.7k tokens of plugin descriptions to every session (`claude plugin details <plugin>@libre-embed` shows each one), so `--only` pays off if you work in a few areas.
+
+Upgrading from 0.x: the old `setup.sh` copied directories into `~/.claude/plugins/` and scripts into `~/.claude/hooks/`, locations Claude Code does not load. Install with either method above, then delete any leftover `~/.claude/plugins/libre-embed-*` directories and `~/.claude/hooks/libre-embed-*.sh` scripts.
+
+### First prompt
 
 Then in any Claude Code session at your firmware project root:
 
-```
+```text
 /rtos design a task structure for a sensor logger that samples 4 channels at 1 kHz and writes to QSPI flash every 100 ms
 ```
+
+If another plugin also defines `/rtos`, use the namespaced form `/rtos-patterns:rtos`.
 
 See [QUICK_START.md](QUICK_START.md) for the full walkthrough on a real board (STM32F4 Discovery + ICM-20948 IMU).
 
@@ -173,6 +214,7 @@ OTA updates that don't brick devices. Watchdog patterns that catch real failures
 
 ## Compatibility
 
+- **Claude Code**: a release with plugin marketplaces (`/plugin`); this release was verified with Claude Code 2.1.285. `setup.sh` and the hooks plugin also need `jq`.
 - **Toolchains**: GCC ARM (any recent version), Clang/LLVM with embedded targets, Zephyr SDK, ESP-IDF, STM32CubeIDE, Microchip XC32, Renesas e² studio
 - **MCU families covered**: ARM Cortex-M0/M0+/M3/M4/M7/M33 (STM32, NXP LPC + Kinetis + i.MX RT, Nordic nRF, Microchip SAM, RP2040, ESP32, Renesas RA), MSP430 (light), AVR (light)
 - **RTOS coverage**: FreeRTOS (deep), Zephyr (deep), ThreadX (moderate), RT-Thread (light)
@@ -181,6 +223,12 @@ OTA updates that don't brick devices. Watchdog patterns that catch real failures
 - **OS**: Linux / macOS for development host (Windows tolerated, WSL2 recommended)
 
 LibreEmbed makes no calls home and does not require any vendor account beyond what your toolchain itself needs.
+
+---
+
+## Feedback
+
+Starred this? Tell us what worked and what is missing: [open a feedback issue](https://github.com/HermeticOrmus/LibreEmbed-Claude-Code/issues/new?template=feedback.yml). Every piece of feedback gets an answer, and changes that come from it are credited in the release notes.
 
 ---
 
