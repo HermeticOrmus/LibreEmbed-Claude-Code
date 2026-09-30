@@ -157,7 +157,7 @@ Grok Build loads the same plugin folders. Add the marketplace and install a plug
 
 ```bash
 grok plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code
-grok plugin install rtos-patterns@libre-embed
+grok plugin install rtos-patterns@LibreEmbed-Claude-Code
 ```
 
 Or install one plugin straight from its folder, with no marketplace:

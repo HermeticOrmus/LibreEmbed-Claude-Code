@@ -157,7 +157,7 @@ Grok Build 加载的是同样的插件目录。在终端中添加插件市场并
 
 ```bash
 grok plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code
-grok plugin install rtos-patterns@libre-embed
+grok plugin install rtos-patterns@LibreEmbed-Claude-Code
 ```
 
 也可以不经过插件市场，直接从插件目录安装单个插件：
