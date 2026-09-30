@@ -1,0 +1,16 @@
+{
+  "name": "bootloader-design",
+  "version": "1.0.0",
+  "description": "Bootloader architecture, firmware update mechanisms, secure boot",
+  "author": {
+    "name": "Diego Bodart",
+    "url": "https://github.com/HermeticOrmus"
+  },
+  "homepage": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "license": "MIT",
+  "keywords": [
+    "bootloader",
+    "design"
+  ]
+}

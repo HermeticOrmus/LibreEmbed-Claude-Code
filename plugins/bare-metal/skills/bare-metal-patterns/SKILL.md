@@ -1,3 +1,8 @@
+---
+name: "bare-metal-patterns"
+description: "Production bare-metal C patterns for ARM Cortex-M."
+---
+
 # bare-metal-patterns
 
 ## Knowledge Base

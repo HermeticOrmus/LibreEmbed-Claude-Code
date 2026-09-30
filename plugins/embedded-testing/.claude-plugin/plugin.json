@@ -1,0 +1,16 @@
+{
+  "name": "embedded-testing",
+  "version": "1.0.0",
+  "description": "Unit testing on target, HIL testing, mocking hardware",
+  "author": {
+    "name": "Diego Bodart",
+    "url": "https://github.com/HermeticOrmus"
+  },
+  "homepage": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "license": "MIT",
+  "keywords": [
+    "embedded",
+    "testing"
+  ]
+}

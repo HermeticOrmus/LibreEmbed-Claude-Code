@@ -1,3 +1,8 @@
+---
+name: "firmware-update-patterns"
+description: "FOTA patterns for MCU firmware updates with reliability guarantees."
+---
+
 # firmware-update-patterns
 
 ## Knowledge Base

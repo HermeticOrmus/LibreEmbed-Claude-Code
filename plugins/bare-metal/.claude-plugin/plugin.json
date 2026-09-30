@@ -1,0 +1,16 @@
+{
+  "name": "bare-metal",
+  "version": "1.0.0",
+  "description": "Bare metal programming, register manipulation, linker scripts",
+  "author": {
+    "name": "Diego Bodart",
+    "url": "https://github.com/HermeticOrmus"
+  },
+  "homepage": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "license": "MIT",
+  "keywords": [
+    "bare",
+    "metal"
+  ]
+}

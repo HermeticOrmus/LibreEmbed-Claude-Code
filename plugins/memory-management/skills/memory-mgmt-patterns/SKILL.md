@@ -1,3 +1,8 @@
+---
+name: "memory-mgmt-patterns"
+description: "Embedded memory management patterns for deterministic, fragmentation-free firmware."
+---
+
 # memory-mgmt-patterns
 
 ## Knowledge Base

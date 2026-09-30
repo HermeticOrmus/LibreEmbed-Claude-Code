@@ -1,3 +1,8 @@
+---
+name: "cortex-m-patterns"
+description: "Real ARM Cortex-M patterns used in production firmware."
+---
+
 # cortex-m-patterns
 
 ## Knowledge Base
