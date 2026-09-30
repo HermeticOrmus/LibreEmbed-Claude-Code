@@ -1,0 +1,125 @@
+{
+  "name": "libre-embed",
+  "owner": {
+    "name": "Diego Bodart",
+    "url": "https://github.com/HermeticOrmus"
+  },
+  "metadata": {
+    "description": "Embedded systems, firmware, and IoT plugins for Claude Code, from bare metal to RTOS.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "arm-cortex-m",
+      "description": "ARM Cortex-M core programming across M0 to M33: CMSIS, startup code, NVIC, SysTick, FPU, MPU, and sleep modes.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/arm-cortex-m"
+    },
+    {
+      "name": "bare-metal",
+      "description": "Bare-metal firmware without a HAL: register-level drivers, linker scripts, startup code, and minimal runtimes.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/bare-metal"
+    },
+    {
+      "name": "bootloader-design",
+      "description": "MCU bootloader architecture: flash layouts, image verification, signature checks, secure boot, and fail-safe recovery.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/bootloader-design"
+    },
+    {
+      "name": "communication-buses",
+      "description": "I2C, SPI, UART, CAN, and USB drivers with DMA strategy, error recovery, bit timing math, and MCU peripheral quirks.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/communication-buses"
+    },
+    {
+      "name": "debug-trace",
+      "description": "On-target debugging for Cortex-M: SWD and JTAG probes, HardFault decoding, GDB, ITM and SWO trace, and DWT timing.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/debug-trace"
+    },
+    {
+      "name": "embedded-linux",
+      "description": "Embedded Linux on ARM SoCs: Yocto, Buildroot, device trees, kernel modules, cross-compilation, and U-Boot.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/embedded-linux"
+    },
+    {
+      "name": "embedded-testing",
+      "description": "Firmware testing: Unity, CMock, and Ceedling unit tests, hardware mocks, QEMU, hardware-in-the-loop, and coverage.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/embedded-testing"
+    },
+    {
+      "name": "firmware-update",
+      "description": "Firmware over-the-air updates: dual-bank flash, MCUboot, ESP-IDF OTA, delta images, version checks, and automatic rollback.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/firmware-update"
+    },
+    {
+      "name": "fpga-integration",
+      "description": "MCU and FPGA integration: Verilog register interfaces, AXI-Lite and SPI links, timing constraints, and MCU drivers.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/fpga-integration"
+    },
+    {
+      "name": "iot-protocols",
+      "description": "IoT connectivity: choosing between MQTT, CoAP, LwM2M, BLE, LoRaWAN, Thread, and Zigbee, then designing the protocol layer.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/iot-protocols"
+    },
+    {
+      "name": "memory-management",
+      "description": "Deterministic firmware memory: static allocation, memory pools, FreeRTOS heaps, stack sizing, and MPU protection.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/memory-management"
+    },
+    {
+      "name": "power-management",
+      "description": "Low-power firmware: sleep modes, tickless idle, clock gating, wake sources, current measurement, and battery life budgets.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/power-management"
+    },
+    {
+      "name": "rtos-patterns",
+      "description": "FreeRTOS and Zephyr firmware design: task graphs, IPC sizing, priority inversion, watchdogs, and stack sizing.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/rtos-patterns"
+    },
+    {
+      "name": "safety-critical",
+      "description": "Safety-critical firmware: MISRA C, IEC 61508, ISO 26262, DO-178C, defensive coding, watchdogs, and static analysis.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/safety-critical"
+    },
+    {
+      "name": "sensor-integration",
+      "description": "Sensor integration: drivers from datasheets, calibration, digital filtering, Kalman filters, and IMU sensor fusion.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/sensor-integration"
+    },
+    {
+      "name": "libre-embed-hooks",
+      "description": "Optional safety hooks for firmware work: confirm before flash, erase, and secret-file operations, detect embedded projects at session start, and flag empty files after edits.",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "source": "./plugins/libre-embed-hooks"
+    }
+  ]
+}
