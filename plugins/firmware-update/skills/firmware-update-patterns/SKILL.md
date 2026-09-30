@@ -1,6 +1,6 @@
 ---
 name: "firmware-update-patterns"
-description: "FOTA patterns for MCU firmware updates with reliability guarantees."
+description: "OTA update patterns: MCUboot image headers, update progress over MQTT, version comparison, boot counters with automatic rollback, and aligned chunk writes. Use when implementing the device side of a firmware update."
 ---
 
 # firmware-update-patterns

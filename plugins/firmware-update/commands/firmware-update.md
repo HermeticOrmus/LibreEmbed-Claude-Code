@@ -1,5 +1,6 @@
 ---
-description: "Firmware OTA command: image packaging, distribution, flash write, verification, rollback."
+description: "Package, distribute, apply, or verify an OTA firmware image, including rollback."
+argument-hint: "<package|distribute|apply|verify> [options]"
 ---
 
 # /firmware-update

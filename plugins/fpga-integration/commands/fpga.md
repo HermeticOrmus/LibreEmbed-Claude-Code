@@ -1,5 +1,6 @@
 ---
-description: "FPGA integration command: HDL generation, synthesis, programming, MCU interface."
+description: "Generate a Verilog module, a Vivado or Quartus synthesis script, programming commands, or the MCU-side interface driver."
+argument-hint: "<design|synthesize|program|interface> [options]"
 ---
 
 # /fpga

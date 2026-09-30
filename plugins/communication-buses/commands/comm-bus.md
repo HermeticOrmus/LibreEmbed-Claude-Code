@@ -1,5 +1,6 @@
 ---
-description: "You are a bus-driver-engineer agent using deep expertise across I2C, SPI, UART, CAN, and USB."
+description: "Design, configure, or debug an I2C, SPI, UART, CAN, or USB driver, from init sequence to error recovery and scope checks."
+argument-hint: "<bus and problem> or <configure|test|analyze|debug> [options]"
 ---
 
 # Communication bus driver design and debug

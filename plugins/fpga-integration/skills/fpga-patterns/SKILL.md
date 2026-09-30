@@ -1,6 +1,6 @@
 ---
 name: "fpga-patterns"
-description: "Synthesizable Verilog patterns for FPGA-MCU integration."
+description: "Synthesizable Verilog patterns for MCU-FPGA designs on Artix-7 and Cyclone V: register bank with strobes, two-flop clock domain crossing, PWM generator, Vivado block design Tcl, and ILA or SignalTap capture. Use when writing FPGA logic that an MCU drives or debugging it in hardware."
 ---
 
 # fpga-patterns

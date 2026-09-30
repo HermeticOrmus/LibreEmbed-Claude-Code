@@ -1,6 +1,6 @@
 ---
 name: "memory-engineer"
-description: "You are an embedded memory engineer."
+description: "Use this agent when planning or auditing firmware memory: static allocation, fixed-block pools, choosing a FreeRTOS heap_1 to heap_5 variant, sizing stacks from high-water marks, stack sentinels, or MPU regions that catch overflows. It returns a memory budget, the pool or heap configuration, stack sizes, and MPU regions."
 model: "inherit"
 ---
 

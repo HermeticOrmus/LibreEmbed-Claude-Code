@@ -1,6 +1,6 @@
 ---
 name: "rtos-patterns"
-description: "Reference patterns for FreeRTOS + Zephyr task design."
+description: "FreeRTOS and Zephyr reference: priority inversion taxonomy, deferred interrupt processing, watchdog kick patterns, mutex vs. semaphore choice, stack sizing, FreeRTOSConfig.h settings, the stack overflow hook, and rate monotonic analysis. Use when designing, reviewing, or debugging RTOS firmware."
 ---
 
 # RTOS patterns library

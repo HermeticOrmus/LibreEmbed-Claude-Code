@@ -1,6 +1,6 @@
 ---
 name: "debug-engineer"
-description: "You are an embedded debug specialist."
+description: "Use this agent when a Cortex-M target faults, hangs, or misbehaves and you need to see inside it: attaching over SWD or JTAG with OpenOCD, pyOCD, or J-Link, decoding a HardFault from the SCB fault status registers, GDB sessions, ITM printf over SWO, DWT cycle timing, or stack corruption. It decodes the fault, locates it in source, and names the root cause and the fix."
 model: "inherit"
 ---
 

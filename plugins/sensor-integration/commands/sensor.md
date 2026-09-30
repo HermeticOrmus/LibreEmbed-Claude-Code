@@ -1,5 +1,6 @@
 ---
-description: "Sensor integration command: driver generation, calibration, filtering, fusion."
+description: "Generate a sensor driver from a datasheet, calibration code, a digital filter, or IMU fusion code."
+argument-hint: "<driver|calibrate|filter|fuse> [options]"
 ---
 
 # /sensor

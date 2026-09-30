@@ -1,6 +1,6 @@
 ---
 name: "debug-trace-patterns"
-description: "Practical debug patterns for ARM Cortex-M firmware."
+description: "Cortex-M debug patterns: CFSR decoding after a HardFault, addr2line from fault PC to source line, GDB commands for live faults, stack canaries, ITM printf, and DWT data watchpoints. Use when chasing a crash, a hang, or memory corruption on target."
 ---
 
 # debug-trace-patterns

@@ -1,6 +1,6 @@
 ---
 name: "sensor-engineer"
-description: "You are a sensor integration engineer."
+description: "Use this agent when bringing up or tuning a sensor: writing an I2C or SPI driver from a datasheet, two-point or multi-point calibration, moving average, IIR, or fixed-point Kalman filters, or fusing accelerometer and gyroscope data with complementary or Madgwick filters. It returns the driver, the calibration, and the filter code."
 model: "inherit"
 ---
 

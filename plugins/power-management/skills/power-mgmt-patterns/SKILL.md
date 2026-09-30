@@ -1,6 +1,6 @@
 ---
 name: "power-mgmt-patterns"
-description: "Power management patterns for battery-operated embedded systems."
+description: "Low-power patterns: sleep entry checklist, RTC alarm wake-up, GPIO leakage prevention, a power budget format, and FreeRTOS tickless idle on LPTIM. Use when cutting sleep current or estimating battery life."
 ---
 
 # power-mgmt-patterns

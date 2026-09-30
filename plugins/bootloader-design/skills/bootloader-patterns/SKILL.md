@@ -1,6 +1,6 @@
 ---
 name: "bootloader-patterns"
-description: "Production bootloader patterns for STM32, nRF52, and SAM MCUs."
+description: "Bootloader patterns for STM32, nRF52, and SAM parts: boot decision tree, RTC backup register boot flags, dual-bank flash layout, YMODEM receive over UART, post-flash verification, and watchdog handling during boot. Use when building or reviewing the boot path of a device that updates in the field."
 ---
 
 # bootloader-patterns

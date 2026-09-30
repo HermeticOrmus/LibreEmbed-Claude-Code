@@ -1,5 +1,6 @@
 ---
-description: "ARM Cortex-M development command: startup code, linker scripts, peripheral configuration, and debug."
+description: "Generate Cortex-M startup code or a linker script, configure a core subsystem, decode a fault, or add DWT timing."
+argument-hint: "<init|configure|debug|benchmark> [options]"
 ---
 
 # /cortex-m

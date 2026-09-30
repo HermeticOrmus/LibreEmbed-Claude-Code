@@ -1,5 +1,6 @@
 ---
-description: "You are an iot-protocol-engineer agent with deep expertise across MQTT, CoAP, LwM2M, BLE GATT, LoRaWAN, Thread, and Zigbee."
+description: "Pick an IoT protocol from power, range, data rate, and reliability constraints, then design its topics, security, and power budget."
+argument-hint: "<device constraints> or <configure|connect|test|monitor> [options]"
 ---
 
 # IoT protocol selection and design

@@ -1,7 +1,7 @@
 {
   "name": "safety-critical",
   "version": "1.0.0",
-  "description": "IEC 61508, DO-178C, MISRA C, static analysis, certification",
+  "description": "Safety-critical firmware: MISRA C, IEC 61508, ISO 26262, DO-178C, defensive coding, watchdogs, and static analysis.",
   "author": {
     "name": "Diego Bodart",
     "url": "https://github.com/HermeticOrmus"
@@ -10,7 +10,11 @@
   "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
   "license": "MIT",
   "keywords": [
-    "safety",
-    "critical"
+    "embedded",
+    "safety-critical",
+    "misra",
+    "iec-61508",
+    "iso-26262",
+    "do-178c"
   ]
 }

@@ -1,6 +1,6 @@
 ---
 name: "bare-metal-patterns"
-description: "Production bare-metal C patterns for ARM Cortex-M."
+description: "Register-level C patterns for Cortex-M without a HAL: bit manipulation macros, GPIO and polled UART setup, SysTick timebase, interrupt-driven UART ring buffer, linker sections and map files, and weak default ISR handlers. Use when writing or reviewing HAL-free drivers and startup code."
 ---
 
 # bare-metal-patterns

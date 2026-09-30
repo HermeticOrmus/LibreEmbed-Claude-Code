@@ -1,7 +1,7 @@
 {
   "name": "bootloader-design",
   "version": "1.0.0",
-  "description": "Bootloader architecture, firmware update mechanisms, secure boot",
+  "description": "MCU bootloader architecture: flash layouts, image verification, signature checks, secure boot, and fail-safe recovery.",
   "author": {
     "name": "Diego Bodart",
     "url": "https://github.com/HermeticOrmus"
@@ -10,7 +10,10 @@
   "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
   "license": "MIT",
   "keywords": [
+    "embedded",
     "bootloader",
-    "design"
+    "secure-boot",
+    "flash",
+    "firmware-update"
   ]
 }

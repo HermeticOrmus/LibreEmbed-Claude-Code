@@ -1,7 +1,7 @@
 {
   "name": "communication-buses",
   "version": "1.0.0",
-  "description": "Bus drivers look simple until you ship one.",
+  "description": "I2C, SPI, UART, CAN, and USB drivers with DMA strategy, error recovery, bit timing math, and MCU peripheral quirks.",
   "author": {
     "name": "Diego Bodart",
     "url": "https://github.com/HermeticOrmus"
@@ -10,7 +10,12 @@
   "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
   "license": "MIT",
   "keywords": [
-    "communication",
-    "buses"
+    "embedded",
+    "i2c",
+    "spi",
+    "uart",
+    "can",
+    "usb",
+    "drivers"
   ]
 }

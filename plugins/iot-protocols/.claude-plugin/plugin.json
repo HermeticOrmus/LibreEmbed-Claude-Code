@@ -1,7 +1,7 @@
 {
   "name": "iot-protocols",
   "version": "1.0.0",
-  "description": "Connectivity is rarely \"just add WiFi.\" The choice between MQTT and CoAP depends on whether you need reliable delivery or low overhead.",
+  "description": "IoT connectivity: choosing between MQTT, CoAP, LwM2M, BLE, LoRaWAN, Thread, and Zigbee, then designing the protocol layer.",
   "author": {
     "name": "Diego Bodart",
     "url": "https://github.com/HermeticOrmus"
@@ -10,7 +10,12 @@
   "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
   "license": "MIT",
   "keywords": [
+    "embedded",
     "iot",
-    "protocols"
+    "mqtt",
+    "coap",
+    "ble",
+    "lorawan",
+    "thread"
   ]
 }

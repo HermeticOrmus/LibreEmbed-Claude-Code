@@ -1,5 +1,6 @@
 ---
-description: "Embedded debug command: fault analysis, GDB sessions, trace setup, stack inspection."
+description: "Attach a debugger, halt and inspect a target, decode fault registers, or configure ITM, SWO, or ETM trace."
+argument-hint: "<attach|halt|fault-analyze|trace> [options]"
 ---
 
 # /debug-embedded

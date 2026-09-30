@@ -1,6 +1,6 @@
 ---
 name: "safety-critical-patterns"
-description: "MISRA C compliance and safety-critical firmware patterns."
+description: "Safety-critical C patterns: MISRA-compliant fixed-width types, single-exit functions (Rule 15.5), suppression comments, a March-C RAM test, and CRC protection of critical data. Use when writing or reviewing firmware under a functional safety standard."
 ---
 
 # safety-critical-patterns

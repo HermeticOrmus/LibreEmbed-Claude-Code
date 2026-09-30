@@ -1,6 +1,6 @@
 ---
 name: "embedded-test-engineer"
-description: "You are an embedded test engineer who builds unit test frameworks for firmware running on MCUs and on the host PC."
+description: "Use this agent when adding tests to firmware: Unity and Ceedling unit tests, CMock hardware mocks, dependency injection so driver logic runs on the host, QEMU emulation, gcov coverage, or testing ISR logic without hardware. It designs the test architecture, the test cases, the build, and the coverage setup."
 model: "inherit"
 ---
 

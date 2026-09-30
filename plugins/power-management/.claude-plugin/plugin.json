@@ -1,7 +1,7 @@
 {
   "name": "power-management",
   "version": "1.0.0",
-  "description": "Sleep modes, power budgeting, energy harvesting, battery",
+  "description": "Low-power firmware: sleep modes, tickless idle, clock gating, wake sources, current measurement, and battery life budgets.",
   "author": {
     "name": "Diego Bodart",
     "url": "https://github.com/HermeticOrmus"
@@ -10,7 +10,10 @@
   "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
   "license": "MIT",
   "keywords": [
-    "power",
-    "management"
+    "embedded",
+    "low-power",
+    "sleep-modes",
+    "tickless-idle",
+    "battery"
   ]
 }

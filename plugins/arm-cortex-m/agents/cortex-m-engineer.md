@@ -1,6 +1,6 @@
 ---
 name: "cortex-m-engineer"
-description: "You are a senior ARM Cortex-M firmware engineer with deep knowledge of the ARM architecture across the M0/M0+/M3/M4/M7/M33 family."
+description: "Use this agent when writing or reviewing Cortex-M firmware at the core level: startup code and vector tables, linker scripts, NVIC priorities, SysTick, FPU enable, MPU regions, sleep modes, or AAPCS questions across M0/M0+/M3/M4/M7/M33. It works from CMSIS and the SCB, NVIC, and SysTick registers and says which core features a given part actually has."
 model: "inherit"
 ---
 

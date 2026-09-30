@@ -1,5 +1,6 @@
 ---
-description: "You are an RTOS specialist using the rtos-engineer agent's expertise."
+description: "Design a FreeRTOS or Zephyr task structure with sized IPC, a priority inversion walk, stack budgets, and failure-mode timing."
+argument-hint: "<problem with rates and deadlines> or <design|create|debug|analyze> [options]"
 ---
 
 # RTOS task design and IPC sizing

@@ -1,6 +1,6 @@
 ---
 name: "bootloader-engineer"
-description: "You are a bootloader architect specializing in embedded firmware update systems."
+description: "Use this agent when designing or reviewing a bootloader: primary, secondary, and golden image topologies, image headers, flash erase and program sequences, CRC32 and ECDSA signature checks with mbedTLS, the jump to the application, or OTP-based rollback prevention. It returns a flash layout, a boot decision tree, the code, and a recovery path."
 model: "inherit"
 ---
 

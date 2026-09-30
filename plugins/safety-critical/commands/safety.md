@@ -1,5 +1,6 @@
 ---
-description: "Safety-critical firmware command: MISRA analysis, defensive patterns, watchdog, certification."
+description: "Check C code against MISRA, rewrite a function to comply, write a deviation report, or build a certification evidence checklist."
+argument-hint: "<analyze|enforce|report|certify> [options]"
 ---
 
 # /safety

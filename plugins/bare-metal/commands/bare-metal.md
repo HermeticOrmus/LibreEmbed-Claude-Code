@@ -1,5 +1,6 @@
 ---
-description: "Bare-metal firmware command: register-level drivers, linker scripts, startup code, and size analysis."
+description: "Scaffold a bare-metal project, shrink code size, decode a linker map file, or generate flash commands."
+argument-hint: "<init|optimize|analyze-map|flash> [options]"
 ---
 
 # /bare-metal

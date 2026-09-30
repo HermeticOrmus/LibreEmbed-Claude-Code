@@ -1,6 +1,6 @@
 ---
 name: "safety-engineer"
-description: "You are a safety-critical firmware engineer who designs software compliant with IEC 61508 (industrial), DO-178C (aviation), and ISO 26262 (automotive)."
+description: "Use this agent when firmware has to meet IEC 61508, ISO 26262, or DO-178C: MISRA C:2012 reviews, defensive coding, watchdog strategy, static analysis setup with Polyspace, PC-lint, or Parasoft, or preparing for a SIL or DAL audit. It lists the safety requirements, the MISRA violations found, the defensive patterns applied, and the static analysis configuration."
 model: "inherit"
 ---
 

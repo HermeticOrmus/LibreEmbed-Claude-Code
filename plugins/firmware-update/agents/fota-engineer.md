@@ -1,6 +1,6 @@
 ---
 name: "fota-engineer"
-description: "You are a Firmware Over-The-Air (FOTA) update architect."
+description: "Use this agent when designing or reviewing over-the-air updates: dual-bank flash, MCUboot, ESP-IDF OTA, AWS IoT Jobs, MQTT distribution, delta updates, or rollback triggers. It returns the flash layout, the OTA state machine, the code, and the failure modes a field update has to survive."
 model: "inherit"
 ---
 
