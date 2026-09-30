@@ -45,6 +45,9 @@ void SensorTask(void *params) {
     for (;;) {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);  // Wait for ISR notify
         HAL_SPI_Receive_DMA(&hspi1, sample, 6);
+        if (ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(2)) == 0) {  // DMA-complete notify from HAL_SPI_RxCpltCallback
+            continue;  // DMA did not finish: drop this sample rather than queue a stale buffer
+        }
         xQueueSend(SensorQueue, sample, 0);  // Don't block on send
     }
 }
@@ -55,12 +58,13 @@ void LoggerTask(void *params) {
     UINT bw;
     for (;;) {
         // Wait until we have 200 samples or 50 ms elapsed
-        for (int i = 0; i < 200; i++) {
+        int i;
+        for (i = 0; i < 200; i++) {
             if (xQueueReceive(SensorQueue, &batch[i * 6], pdMS_TO_TICKS(50)) != pdPASS) {
                 break;  // Timeout — write whatever we have
             }
         }
-        f_write(&datafile, batch, sizeof(batch), &bw);
+        f_write(&datafile, batch, (UINT)(i * 6), &bw);  // i samples received
         f_sync(&datafile);
     }
 }
@@ -158,8 +162,7 @@ K_THREAD_STACK_DEFINE(sensor_stack, 1024);
 struct k_thread sensor_thread;
 K_MSGQ_DEFINE(sensor_msgq, 6, 100, 4);  // 6-byte items, 100 deep, 4-byte aligned
 
-static struct k_sem sensor_isr_sem;
-K_SEM_DEFINE(sensor_isr_sem, 0, 1);
+K_SEM_DEFINE(sensor_isr_sem, 0, 1);  // Defines and initializes the semaphore
 
 void sensor_thread_fn(void *p1, void *p2, void *p3) {
     uint8_t sample[6];
@@ -177,7 +180,7 @@ k_thread_create(&sensor_thread, sensor_stack, K_THREAD_STACK_SIZEOF(sensor_stack
 
 Note any conventions that change:
 - Zephyr requires explicit `K_THREAD_STACK_DEFINE` instead of inline allocation
-- Zephyr semaphores ARE priority-inherited (FreeRTOS counting semaphores are NOT)
+- Priority inheritance lives in the mutex on both sides: `k_mutex` in Zephyr, `xSemaphoreCreateMutex` in FreeRTOS. Semaphores in either RTOS do not inherit priority, so shared-state locks must be mutexes after the port too
 - Zephyr's device tree replaces FreeRTOS HAL config
 
 ## Output format

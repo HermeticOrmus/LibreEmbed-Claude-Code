@@ -385,7 +385,7 @@ void send_temperature(int16_t temp_tenths)
 
 **Spreading Factor (SF) selection:**
 - SF7: shortest airtime (~50ms), shortest range, EU868 duty cycle allows frequent transmissions.
-- SF12: longest range, 1-2s airtime, EU868 1% duty cycle limits to ~36 uplinks/hour.
+- SF12: longest range, 1-2s airtime, EU868 1% duty cycle (36 s of airtime per hour) limits to roughly 18-36 uplinks/hour.
 - ADR (Adaptive Data Rate): network server adjusts SF based on signal quality.
 
 ### CoAP
@@ -426,7 +426,7 @@ coap_send(session, req);
 
 1. Check power budget before selecting protocol. BLE scan = ~5mA, LoRa TX = ~120mA (50ms), MQTT keep-alive = depends on TCP.
 2. For MQTT: size payloads. QoS 0 at 1Hz with 100-byte JSON = ~800bps. Well within NB-IoT limits.
-3. For LoRaWAN: calculate airtime before deploying. SF12, 125kHz, 10 bytes = 1.8s airtime; EU868 1% duty = 1 tx per 3 minutes maximum.
+3. For LoRaWAN: calculate airtime before deploying. SF12, 125kHz, 10-byte application payload (23 bytes on air with the 13-byte LoRaWAN header and MIC) = ~1.5s airtime; EU868 1% duty = at most one uplink every ~2.5 minutes.
 4. Always use TLS for MQTT over the internet. Pre-shared key is acceptable for resource-constrained MCUs.
 5. For BLE: advertise with 100ms interval for discoverable mode, 1s for background beacon.
 

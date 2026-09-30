@@ -191,7 +191,7 @@ Worked FreeRTOS code for the primitives above. Use it when the user asks for imp
            ┌─────────┴──────────┐
            │                    │
     vTaskSuspend         Queue/Semaphore/
-    vTaskDelay           Delay/Event wait
+                         vTaskDelay/Event wait
            │                    │
            ▼                    ▼
     ┌────────────┐      ┌────────────────┐
