@@ -40,6 +40,8 @@ cd ~/projects/LibreEmbed-Claude-Code
 ./setup.sh
 ```
 
+Or, inside Claude Code: `/plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code`, then `/plugin install <plugin>@libre-embed` for each plugin you want.
+
 Restart Claude Code so it picks up the plugins.
 
 ## Step 1 — Buy the hardware

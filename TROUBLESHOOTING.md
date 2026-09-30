@@ -4,15 +4,17 @@ Common scenarios when using LibreEmbed plugins, plus the general embedded debugg
 
 ## Plugin issues
 
-### Plugins copied but Claude Code doesn't see them
+### Plugins installed but Claude Code doesn't see them
 
 ```bash
-ls ~/.claude/plugins/ | grep '^libre-embed-'
+claude plugin list | grep -A3 '@libre-embed'
 ```
 
-If you see the directories: restart Claude Code. Plugin changes don't hot-reload.
+If they are listed and enabled: restart Claude Code. Plugin changes don't hot-reload.
 
-If you don't see them: re-run `./setup.sh` and watch the output for `[skip]` lines. Older Claude Code installs may use `~/.config/claude/plugins/` instead — pass `--plugins-dir <path>`.
+If they are missing: re-run `./setup.sh` and read its output, or install from inside Claude Code with `/plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code` and `/plugin install <plugin>@libre-embed`. A disabled plugin comes back with `claude plugin enable <plugin>@libre-embed`.
+
+Versions before 1.0.0 copied directories into `~/.claude/plugins/` and scripts into `~/.claude/hooks/`, which Claude Code does not load. After installing 1.0.0, delete any leftover `~/.claude/plugins/libre-embed-*` directories and `~/.claude/hooks/libre-embed-*.sh` scripts. `--plugins-dir` is still accepted by `setup.sh` but no longer used.
 
 ### `/rtos`, `/iot`, `/cortex-m`, etc. not recognized
 
@@ -21,6 +23,7 @@ The slash commands are registered when Claude Code reads the plugin's `commands/
 1. Verify the plugin's `commands/` directory has at least one `.md` file
 2. Verify the filename matches the command name (the slash is the file basename minus `.md`)
 3. Restart Claude Code
+4. If another plugin defines a command with the same name, use the namespaced form, for example `/rtos-patterns:rtos`
 
 ### Agent gives generic answers, not embedded-specific
 
@@ -140,7 +143,7 @@ Datasheets specify with *all peripherals disabled*. In practice:
 ## When to file an issue
 
 - A depth-complete plugin gives templated / generic answers — file an issue with the prompt
-- A hook fires when it shouldn't — file an issue with `~/.claude/logs/hooks.log` (after redacting any project paths you don't want public)
+- A hook fires when it shouldn't: file an issue with the command or file path it fired on (redact anything you don't want public). `claude --debug hooks` shows each hook run in the session
 - A `setup.sh` flag doesn't behave as documented
 - Translation requests for learning paths
 

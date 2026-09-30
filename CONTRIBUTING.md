@@ -34,8 +34,8 @@ Make changes, test against real or simulated hardware, then submit.
 For agent + command edits:
 
 1. Make the edit
-2. Re-run `./setup.sh` (or copy the modified plugin into `~/.claude/plugins/`)
-3. Restart Claude Code (plugin changes don't hot-reload)
+2. Validate it: `claude plugin validate plugins/<name>` (CI runs the same check, plus a clean install of every plugin, on each PR)
+3. Start a session that loads your working copy: `claude --plugin-dir plugins/<name>` (no reinstall needed; plugin changes don't hot-reload, so restart this session after further edits)
 4. Invoke the agent / command with a realistic embedded scenario
 5. Confirm the response is more substantive than the templated baseline
 
@@ -76,24 +76,35 @@ PR template:
 
 ## Plugin-authoring conventions
 
-Each plugin lives in `plugins/<name>/` with three subdirectories:
+Each plugin lives in `plugins/<name>/` with a manifest and three subdirectories, in the layout Claude Code loads:
 
-```
+```text
 plugins/<name>/
-├── README.md       # overview of what the plugin covers + when to use
+├── .claude-plugin/
+│   └── plugin.json   # name, version, description, author, keywords
+├── README.md         # overview of what the plugin covers + when to use
 ├── agents/
-│   └── <name>.md   # specialist agent prompt with capabilities + principles
+│   └── <name>.md     # specialist agent prompt with capabilities + principles
 ├── commands/
-│   └── <name>.md   # slash command logic with concrete code samples
+│   └── <name>.md     # slash command logic with concrete code samples
 └── skills/
-    └── <name>.md   # reference pattern library
+    └── <name>/
+        └── SKILL.md  # reference pattern library
 ```
+
+A new plugin also needs an entry in `.claude-plugin/marketplace.json`, with the same one-sentence description as its `plugin.json`.
+
+Frontmatter is what Claude Code reads to decide when to use a component, so write it as routing text:
+
+- Agents: `name`, `description` in the form "Use this agent when <situations>. <What it returns>.", and `model: inherit`
+- Commands: `description` (what running it does) and `argument-hint` when it takes arguments
+- Skills: `name` and `description` in the form "<What it provides>. Use when <situations>."
 
 ### Agent prompts
 
 Should include:
 
-- A `name:` and `description:` frontmatter
+- A `name:` and `description:` frontmatter (see the routing-text forms above)
 - A clear "Purpose" section
 - "Core Principles" — what biases this agent has
 - "Capabilities" — what it knows about, in detail
