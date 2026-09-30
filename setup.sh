@@ -103,7 +103,7 @@ if (( GROK )); then
         grok plugin uninstall "$p"
       done
     fi
-    echo "Removed. Restart Grok Build to unload the plugins."
+    echo "Done. Restart Grok Build to unload what was removed."
     exit 0
   fi
   if [[ -z "$src" ]]; then
