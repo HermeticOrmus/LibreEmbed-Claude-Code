@@ -1,5 +1,6 @@
 ---
-description: "Memory management command: pool allocators, stack sizing, heap analysis, MPU protection."
+description: "Analyze memory from a map file or ELF, generate a memory pool, add MPU stack protection, or audit stack high-water marks."
+argument-hint: "<analyze|pool|protect|audit> [options]"
 ---
 
 # /memory

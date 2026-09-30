@@ -1,7 +1,7 @@
 {
   "name": "arm-cortex-m",
   "version": "1.0.0",
-  "description": "ARM Cortex-M programming, CMSIS, HAL, startup code",
+  "description": "ARM Cortex-M core programming across M0 to M33: CMSIS, startup code, NVIC, SysTick, FPU, MPU, and sleep modes.",
   "author": {
     "name": "Diego Bodart",
     "url": "https://github.com/HermeticOrmus"
@@ -10,8 +10,12 @@
   "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
   "license": "MIT",
   "keywords": [
+    "embedded",
     "arm",
-    "cortex",
-    "m"
+    "cortex-m",
+    "cmsis",
+    "nvic",
+    "mpu",
+    "firmware"
   ]
 }

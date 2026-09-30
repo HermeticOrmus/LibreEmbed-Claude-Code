@@ -1,6 +1,6 @@
 ---
 name: "memory-mgmt-patterns"
-description: "Embedded memory management patterns for deterministic, fragmentation-free firmware."
+description: "Deterministic memory patterns: static FreeRTOS objects, pools for variable-rate messages, heap statistics, stack high-water mark audits, and placing arrays in specific SRAM regions. Use when removing malloc from firmware or tracking down memory exhaustion."
 ---
 
 # memory-mgmt-patterns

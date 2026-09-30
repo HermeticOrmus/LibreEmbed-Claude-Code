@@ -1,7 +1,7 @@
 {
   "name": "embedded-linux",
   "version": "1.0.0",
-  "description": "Yocto, Buildroot, device trees, kernel modules",
+  "description": "Embedded Linux on ARM SoCs: Yocto, Buildroot, device trees, kernel modules, cross-compilation, and U-Boot.",
   "author": {
     "name": "Diego Bodart",
     "url": "https://github.com/HermeticOrmus"
@@ -11,6 +11,10 @@
   "license": "MIT",
   "keywords": [
     "embedded",
-    "linux"
+    "linux",
+    "yocto",
+    "buildroot",
+    "device-tree",
+    "kernel"
   ]
 }

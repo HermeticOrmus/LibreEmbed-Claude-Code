@@ -1,6 +1,6 @@
 ---
 name: "embedded-testing-patterns"
-description: "Embedded C test patterns using Unity, CMock, Ceedling, and QEMU."
+description: "Firmware test patterns with Unity, CMock, Ceedling, and QEMU: project layout, testable HAL interfaces, CMock expect chaining, error-path tests, and an on-target test runner over ITM. Use when making embedded C testable or writing tests for it."
 ---
 
 # embedded-testing-patterns

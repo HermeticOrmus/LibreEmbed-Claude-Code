@@ -1,6 +1,6 @@
 ---
 name: "sensor-patterns"
-description: "Sensor driver, calibration, and filtering patterns for embedded C."
+description: "Sensor patterns in embedded C: SPI register protocol, NTC thermistor conversion, multi-point calibration tables, median filters for spike rejection, and temperature compensation. Use when writing a sensor driver or cleaning up noisy readings."
 ---
 
 # sensor-patterns

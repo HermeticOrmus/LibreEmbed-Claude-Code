@@ -1,7 +1,7 @@
 {
   "name": "bare-metal",
   "version": "1.0.0",
-  "description": "Bare metal programming, register manipulation, linker scripts",
+  "description": "Bare-metal firmware without a HAL: register-level drivers, linker scripts, startup code, and minimal runtimes.",
   "author": {
     "name": "Diego Bodart",
     "url": "https://github.com/HermeticOrmus"
@@ -10,7 +10,11 @@
   "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
   "license": "MIT",
   "keywords": [
-    "bare",
-    "metal"
+    "embedded",
+    "bare-metal",
+    "registers",
+    "linker-script",
+    "startup",
+    "firmware"
   ]
 }

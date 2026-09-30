@@ -1,6 +1,6 @@
 ---
 name: "bare-metal-engineer"
-description: "You are a bare-metal embedded C engineer who writes firmware directly against hardware registers without HAL abstraction."
+description: "Use this agent when writing firmware without a HAL: register-level drivers, linker scripts, startup code, a minimal runtime without the standard library, compiler flags, volatile and memory barrier questions, or reading a map file. It works directly against peripheral registers with arm-none-eabi-gcc and explains the register bits it sets."
 model: "inherit"
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: "iot-protocols"
-description: "Reference patterns for MQTT, CoAP, LwM2M, BLE GATT, LoRaWAN, Thread, and Zigbee."
+description: "IoT protocol reference: selection matrix, MQTT QoS flows and LWT, topic design, CoAP observe and block-wise transfer, LwM2M objects and firmware update, BLE GATT and connection tuning, LoRaWAN airtime and classes, and Paho, Zephyr, and ESP-IDF client code. Use when designing or debugging the protocol layer of a connected device."
 ---
 
 # IoT protocols pattern library

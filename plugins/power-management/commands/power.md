@@ -1,5 +1,6 @@
 ---
-description: "Power management command: sleep mode configuration, power budget, measurement, optimization."
+description: "Estimate power use, generate sleep entry and exit code, plan a current measurement, or find power anti-patterns in firmware."
+argument-hint: "<analyze|configure|measure|optimize> [options]"
 ---
 
 # /power

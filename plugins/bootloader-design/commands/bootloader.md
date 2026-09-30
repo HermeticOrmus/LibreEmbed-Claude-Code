@@ -1,5 +1,6 @@
 ---
-description: "Bootloader design and firmware update command: flash layout, image packaging, CRC/signature, YMODEM."
+description: "Design a bootloader, write its flash driver, add image verification, or build an image signing pipeline."
+argument-hint: "<design|flash|verify|sign> [options]"
 ---
 
 # /bootloader

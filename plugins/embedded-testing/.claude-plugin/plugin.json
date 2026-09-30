@@ -1,7 +1,7 @@
 {
   "name": "embedded-testing",
   "version": "1.0.0",
-  "description": "Unit testing on target, HIL testing, mocking hardware",
+  "description": "Firmware testing: Unity, CMock, and Ceedling unit tests, hardware mocks, QEMU, hardware-in-the-loop, and coverage.",
   "author": {
     "name": "Diego Bodart",
     "url": "https://github.com/HermeticOrmus"
@@ -11,6 +11,11 @@
   "license": "MIT",
   "keywords": [
     "embedded",
-    "testing"
+    "testing",
+    "unity",
+    "cmock",
+    "ceedling",
+    "qemu",
+    "hil"
   ]
 }

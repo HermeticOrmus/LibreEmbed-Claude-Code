@@ -1,6 +1,6 @@
 ---
 name: "power-engineer"
-description: "You are an embedded power management engineer."
+description: "Use this agent when a device has to run on a battery: STM32 and nRF52 sleep modes, FreeRTOS tickless idle, peripheral clock gating, wake sources, CR2032 lifetime math, or measuring current with a Nordic PPK2 or the J-Link Energy Profiler. It selects the power mode, writes the entry and exit sequence, calculates battery life, and sets up the measurement."
 model: "inherit"
 ---
 

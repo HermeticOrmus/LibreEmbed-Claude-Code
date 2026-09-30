@@ -1,6 +1,6 @@
 ---
 name: "communication-buses"
-description: "Reference patterns for I2C, SPI, UART, CAN, and USB driver development."
+description: "Bus reference for I2C, SPI, UART, CAN, and USB: addressing, pull-up sizing, bus recovery, SPI mode card, DMA cache rules, ring buffers, CAN bit timing and error states, USB descriptors, and STM32 HAL code for each bus. Use when writing or reviewing a bus driver or diagnosing a misbehaving bus."
 ---
 
 # Communication buses pattern library

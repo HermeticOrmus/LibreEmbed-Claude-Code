@@ -1,6 +1,6 @@
 ---
 name: "embedded-linux-patterns"
-description: "Patterns for Yocto, Buildroot, device trees, and kernel modules on ARM SoCs."
+description: "Embedded Linux patterns: Yocto layer and recipe hierarchy, kernel config fragments, device tree GPIO and interrupt properties, out-of-tree module Makefiles, sysfs attributes, and QEMU testing before hardware. Use when customizing a Linux image or writing a driver for an ARM board."
 ---
 
 # embedded-linux-patterns

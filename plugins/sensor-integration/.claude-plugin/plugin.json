@@ -1,7 +1,7 @@
 {
   "name": "sensor-integration",
   "version": "1.0.0",
-  "description": "Sensor drivers, calibration, filtering, fusion algorithms",
+  "description": "Sensor integration: drivers from datasheets, calibration, digital filtering, Kalman filters, and IMU sensor fusion.",
   "author": {
     "name": "Diego Bodart",
     "url": "https://github.com/HermeticOrmus"
@@ -10,7 +10,11 @@
   "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
   "license": "MIT",
   "keywords": [
-    "sensor",
-    "integration"
+    "embedded",
+    "sensors",
+    "calibration",
+    "filtering",
+    "kalman",
+    "imu"
   ]
 }

@@ -1,5 +1,6 @@
 ---
-description: "Embedded Linux command: Yocto/Buildroot builds, device tree, kernel modules, cross-compilation."
+description: "Generate a Yocto or Buildroot config, flashing commands, a kernel module skeleton, or on-target debug commands."
+argument-hint: "<build|flash|module|debug> [options]"
 ---
 
 # /embedded-linux

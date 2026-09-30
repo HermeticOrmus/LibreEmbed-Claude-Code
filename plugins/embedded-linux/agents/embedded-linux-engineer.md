@@ -1,6 +1,6 @@
 ---
 name: "embedded-linux-engineer"
-description: "You are an embedded Linux engineer with production experience on Yocto, Buildroot, and custom distribution builds for ARM SoCs (iMX6/iMX8, AM335x, BCM2711, Allwinner)."
+description: "Use this agent when building or debugging embedded Linux on an ARM SoC: Yocto layers and recipes, Buildroot configs, device tree nodes, kernel modules, cross-compilation, or U-Boot boot scripts. It returns the target SoC and BSP, the device tree, the module or recipe, and the build commands."
 model: "inherit"
 ---
 

@@ -1,7 +1,7 @@
 {
   "name": "rtos-patterns",
   "version": "1.0.0",
-  "description": "Real-time operating systems are not just \"scheduler plus mutex.\" They are an opinionated set of trade-offs between latency, determinism, footprint, and developer ergonomics.",
+  "description": "FreeRTOS and Zephyr firmware design: task graphs, IPC sizing, priority inversion, watchdogs, and stack sizing.",
   "author": {
     "name": "Diego Bodart",
     "url": "https://github.com/HermeticOrmus"
@@ -10,7 +10,11 @@
   "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
   "license": "MIT",
   "keywords": [
+    "embedded",
     "rtos",
-    "patterns"
+    "freertos",
+    "zephyr",
+    "real-time",
+    "firmware"
   ]
 }

@@ -1,5 +1,6 @@
 ---
-description: "Embedded test command: Unity/CMock unit tests, HIL setup, QEMU emulation, coverage."
+description: "Generate Unity tests, CMock mocks, a hardware-in-the-loop scaffold, or a coverage report."
+argument-hint: "<unit|mock|hil|coverage> [options]"
 ---
 
 # /embedded-test

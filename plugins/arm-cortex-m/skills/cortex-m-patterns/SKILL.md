@@ -1,6 +1,6 @@
 ---
 name: "cortex-m-patterns"
-description: "Real ARM Cortex-M patterns used in production firmware."
+description: "Cortex-M code patterns for SysTick, NVIC priority grouping, FPU enable, MPU regions, AAPCS inline assembly, DWT cycle counting, vector table relocation, and WFI sleep entry. Use when writing core-level Cortex-M code or checking it against a known-good pattern."
 ---
 
 # cortex-m-patterns

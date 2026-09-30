@@ -1,7 +1,7 @@
 {
   "name": "debug-trace",
   "version": "1.0.0",
-  "description": "JTAG, SWD, printf debugging, trace analysis, fault handlers",
+  "description": "On-target debugging for Cortex-M: SWD and JTAG probes, HardFault decoding, GDB, ITM and SWO trace, and DWT timing.",
   "author": {
     "name": "Diego Bodart",
     "url": "https://github.com/HermeticOrmus"
@@ -10,7 +10,12 @@
   "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
   "license": "MIT",
   "keywords": [
-    "debug",
+    "embedded",
+    "debugging",
+    "swd",
+    "jtag",
+    "openocd",
+    "gdb",
     "trace"
   ]
 }
