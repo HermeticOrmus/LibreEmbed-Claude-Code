@@ -2,6 +2,68 @@
 
 Embedded is a wide field and no single bundle can cover it all. PRs are welcome — especially for vendor-specific HALs, additional RTOSes, regional certifications, and real-hardware worked examples.
 
+## Ways to contribute
+
+### Take a Menu item
+
+The [Menu](pantry/MENU.md) lists the next pieces of work, each with a Done-when anyone can check. It is generated from the [pantry](pantry/README.md), which cites where every item came from. Menu items that have been opened for work are issues labeled [`menu`](https://github.com/HermeticOrmus/LibreEmbed-Claude-Code/issues?q=is%3Aopen+label%3Amenu), and smaller starter tasks are listed under [good first issues](https://github.com/HermeticOrmus/LibreEmbed-Claude-Code/contribute). Claim one by commenting on its issue, then open a pull request that says `Closes #N`.
+
+### Report or fix a routing miss
+
+Every agent, command and skill has a `description` that Claude Code reads to decide when to use it. When Claude picks the wrong one, or none, open a [routing miss](https://github.com/HermeticOrmus/LibreEmbed-Claude-Code/issues/new?template=routing-miss.yml) with your prompt and what should have run. To fix one yourself, sharpen the `description` in the frontmatter of the file that should have answered, using the routing-text forms under [Plugin-authoring conventions](#plugin-authoring-conventions).
+
+### Propose or build a plugin
+
+Open a [plugin proposal](https://github.com/HermeticOrmus/LibreEmbed-Claude-Code/issues/new?template=plugin-proposal.yml) first, so the job, the gap and the Done-when are agreed before you write it. A plugin here has this layout:
+
+```text
+plugins/<name>/
+├── .claude-plugin/
+│   └── plugin.json   # name, version, description, author, keywords
+├── README.md
+├── agents/
+│   └── <name>.md     # frontmatter: name, description, model: inherit
+├── commands/
+│   └── <name>.md     # frontmatter: description, argument-hint
+└── skills/
+    └── <name>/
+        └── SKILL.md  # frontmatter: name, description
+```
+
+Each `description` is routing text: it says when Claude should use the file. The plugin also needs an entry in [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json) with the same description as its `plugin.json`. The depth each file should reach is under [Plugin-authoring conventions](#plugin-authoring-conventions).
+
+### Translate
+
+The README has a [Simplified Chinese translation](README.zh-CN.md). QUICK_START.md, TROUBLESHOOTING.md and the [learning paths](learning-paths/) are still English only. Put a translation next to its source as `<name>.zh-CN.md` (or another language tag), link it from the source and from the translated README, and keep code, commands, register names and CLI output as they are.
+
+### Share what you built
+
+Post board bring-ups, firmware and workflows in [Discussions, Show and tell](https://github.com/HermeticOrmus/LibreEmbed-Claude-Code/discussions/categories/show-and-tell). Real-hardware reports are what make this pack credible.
+
+### Test your change locally
+
+These commands match `claude --help` and `claude plugin validate --help` in Claude Code 2.1.286. Run them from the repository root:
+
+```bash
+# Validate the marketplace manifest and the plugin you changed
+claude plugin validate .
+claude plugin validate plugins/<name>
+
+# Load your working copy for one session, without installing it
+claude --plugin-dir plugins/<name>
+
+# Install from a clean config, the way CI does
+export CLAUDE_CONFIG_DIR=$(mktemp -d)
+claude plugin marketplace add ./
+claude plugin install <name>@libre-embed
+claude plugin details <name>@libre-embed
+unset CLAUDE_CONFIG_DIR
+```
+
+`claude plugin details` shows the agents and skills Claude Code loaded from the plugin (commands are listed with the skills) and the tokens each one adds to a session. `claude plugin validate --strict` also fails on warnings.
+
+CI runs the same checks on every pull request: it validates the marketplace and every plugin, then installs all of them into a clean config. A first-time contributor's CI run waits for a maintainer to approve it.
+
 ## What we welcome
 
 - **Bug fixes** in any plugin (agent, command, or skill content)
