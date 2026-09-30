@@ -10,7 +10,7 @@
 # With --grok it registers the checkout as a Grok Build marketplace and
 # installs through the grok CLI instead, the same as running:
 #   grok plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code
-#   grok plugin install <plugin>@libre-embed
+#   grok plugin install <plugin>@LibreEmbed-Claude-Code
 #
 # Usage:
 #   ./setup.sh                      install every plugin
