@@ -52,3 +52,10 @@ Connectivity is rarely "just add WiFi." The choice between MQTT and CoAP depends
 - Cellular protocol detail (NB-IoT, LTE-M) is supported at the application layer but the modem AT command interfaces are not deeply covered
 - 5G + IoT is too early to have settled patterns; the agent will tell you that
 - Custom application protocols over BLE GATT vs. standardized (HID, Battery, etc.) — the agent helps you decide which to use
+
+## Install
+
+```text
+/plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code
+/plugin install iot-protocols@libre-embed
+```
