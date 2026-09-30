@@ -1,0 +1,103 @@
+{
+  "name": "libre-embed",
+  "owner": {
+    "name": "Diego Bodart",
+    "url": "https://github.com/HermeticOrmus"
+  },
+  "metadata": {
+    "description": "Embedded systems, firmware, and IoT plugins for Claude Code, from bare metal to RTOS.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "arm-cortex-m",
+      "source": "./plugins/arm-cortex-m",
+      "description": "ARM Cortex-M programming, CMSIS, HAL, startup code",
+      "version": "1.0.0"
+    },
+    {
+      "name": "bare-metal",
+      "source": "./plugins/bare-metal",
+      "description": "Bare metal programming, register manipulation, linker scripts",
+      "version": "1.0.0"
+    },
+    {
+      "name": "bootloader-design",
+      "source": "./plugins/bootloader-design",
+      "description": "Bootloader architecture, firmware update mechanisms, secure boot",
+      "version": "1.0.0"
+    },
+    {
+      "name": "communication-buses",
+      "source": "./plugins/communication-buses",
+      "description": "Bus drivers look simple until you ship one.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "debug-trace",
+      "source": "./plugins/debug-trace",
+      "description": "JTAG, SWD, printf debugging, trace analysis, fault handlers",
+      "version": "1.0.0"
+    },
+    {
+      "name": "embedded-linux",
+      "source": "./plugins/embedded-linux",
+      "description": "Yocto, Buildroot, device trees, kernel modules",
+      "version": "1.0.0"
+    },
+    {
+      "name": "embedded-testing",
+      "source": "./plugins/embedded-testing",
+      "description": "Unit testing on target, HIL testing, mocking hardware",
+      "version": "1.0.0"
+    },
+    {
+      "name": "firmware-update",
+      "source": "./plugins/firmware-update",
+      "description": "OTA updates, firmware versioning, rollback mechanisms",
+      "version": "1.0.0"
+    },
+    {
+      "name": "fpga-integration",
+      "source": "./plugins/fpga-integration",
+      "description": "FPGA/MCU integration, HDL basics, soft cores, IP blocks",
+      "version": "1.0.0"
+    },
+    {
+      "name": "iot-protocols",
+      "source": "./plugins/iot-protocols",
+      "description": "Connectivity is rarely \"just add WiFi.\" The choice between MQTT and CoAP depends on whether you need reliable delivery or low overhead.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "memory-management",
+      "source": "./plugins/memory-management",
+      "description": "Static allocation, memory pools, stack/heap analysis, MPU",
+      "version": "1.0.0"
+    },
+    {
+      "name": "power-management",
+      "source": "./plugins/power-management",
+      "description": "Sleep modes, power budgeting, energy harvesting, battery",
+      "version": "1.0.0"
+    },
+    {
+      "name": "rtos-patterns",
+      "source": "./plugins/rtos-patterns",
+      "description": "Real-time operating systems are not just \"scheduler plus mutex.\" They are an opinionated set of trade-offs between latency, determinism, footprint, and developer ergonomics.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "safety-critical",
+      "source": "./plugins/safety-critical",
+      "description": "IEC 61508, DO-178C, MISRA C, static analysis, certification",
+      "version": "1.0.0"
+    },
+    {
+      "name": "sensor-integration",
+      "source": "./plugins/sensor-integration",
+      "description": "Sensor drivers, calibration, filtering, fusion algorithms",
+      "version": "1.0.0"
+    }
+  ]
+}

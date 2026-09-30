@@ -1,3 +1,8 @@
+---
+name: "embedded-linux-patterns"
+description: "Patterns for Yocto, Buildroot, device trees, and kernel modules on ARM SoCs."
+---
+
 # embedded-linux-patterns
 
 ## Knowledge Base

@@ -1,0 +1,16 @@
+{
+  "name": "sensor-integration",
+  "version": "1.0.0",
+  "description": "Sensor drivers, calibration, filtering, fusion algorithms",
+  "author": {
+    "name": "Diego Bodart",
+    "url": "https://github.com/HermeticOrmus"
+  },
+  "homepage": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "license": "MIT",
+  "keywords": [
+    "sensor",
+    "integration"
+  ]
+}

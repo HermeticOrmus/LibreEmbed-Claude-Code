@@ -1,0 +1,16 @@
+{
+  "name": "memory-management",
+  "version": "1.0.0",
+  "description": "Static allocation, memory pools, stack/heap analysis, MPU",
+  "author": {
+    "name": "Diego Bodart",
+    "url": "https://github.com/HermeticOrmus"
+  },
+  "homepage": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "license": "MIT",
+  "keywords": [
+    "memory",
+    "management"
+  ]
+}

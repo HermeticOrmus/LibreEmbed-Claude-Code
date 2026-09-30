@@ -1,3 +1,8 @@
+---
+name: "bootloader-patterns"
+description: "Production bootloader patterns for STM32, nRF52, and SAM MCUs."
+---
+
 # bootloader-patterns
 
 ## Knowledge Base

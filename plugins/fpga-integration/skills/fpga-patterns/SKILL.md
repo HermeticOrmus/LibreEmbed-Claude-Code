@@ -1,3 +1,8 @@
+---
+name: "fpga-patterns"
+description: "Synthesizable Verilog patterns for FPGA-MCU integration."
+---
+
 # fpga-patterns
 
 ## Knowledge Base

@@ -1,0 +1,16 @@
+{
+  "name": "fpga-integration",
+  "version": "1.0.0",
+  "description": "FPGA/MCU integration, HDL basics, soft cores, IP blocks",
+  "author": {
+    "name": "Diego Bodart",
+    "url": "https://github.com/HermeticOrmus"
+  },
+  "homepage": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "license": "MIT",
+  "keywords": [
+    "fpga",
+    "integration"
+  ]
+}

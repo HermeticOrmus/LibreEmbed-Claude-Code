@@ -1,3 +1,8 @@
+---
+name: "safety-critical-patterns"
+description: "MISRA C compliance and safety-critical firmware patterns."
+---
+
 # safety-critical-patterns
 
 ## Knowledge Base

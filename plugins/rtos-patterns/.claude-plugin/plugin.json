@@ -1,0 +1,16 @@
+{
+  "name": "rtos-patterns",
+  "version": "1.0.0",
+  "description": "Real-time operating systems are not just \"scheduler plus mutex.\" They are an opinionated set of trade-offs between latency, determinism, footprint, and developer ergonomics.",
+  "author": {
+    "name": "Diego Bodart",
+    "url": "https://github.com/HermeticOrmus"
+  },
+  "homepage": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "license": "MIT",
+  "keywords": [
+    "rtos",
+    "patterns"
+  ]
+}

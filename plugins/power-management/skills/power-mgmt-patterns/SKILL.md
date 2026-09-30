@@ -1,3 +1,8 @@
+---
+name: "power-mgmt-patterns"
+description: "Power management patterns for battery-operated embedded systems."
+---
+
 # power-mgmt-patterns
 
 ## Knowledge Base

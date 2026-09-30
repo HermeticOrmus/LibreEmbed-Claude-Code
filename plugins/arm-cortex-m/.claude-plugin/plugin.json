@@ -1,0 +1,17 @@
+{
+  "name": "arm-cortex-m",
+  "version": "1.0.0",
+  "description": "ARM Cortex-M programming, CMSIS, HAL, startup code",
+  "author": {
+    "name": "Diego Bodart",
+    "url": "https://github.com/HermeticOrmus"
+  },
+  "homepage": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "license": "MIT",
+  "keywords": [
+    "arm",
+    "cortex",
+    "m"
+  ]
+}

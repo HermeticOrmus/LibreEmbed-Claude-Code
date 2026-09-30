@@ -1,3 +1,8 @@
+---
+name: "sensor-patterns"
+description: "Sensor driver, calibration, and filtering patterns for embedded C."
+---
+
 # sensor-patterns
 
 ## Knowledge Base

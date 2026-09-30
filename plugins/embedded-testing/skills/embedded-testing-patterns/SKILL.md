@@ -1,3 +1,8 @@
+---
+name: "embedded-testing-patterns"
+description: "Embedded C test patterns using Unity, CMock, Ceedling, and QEMU."
+---
+
 # embedded-testing-patterns
 
 ## Knowledge Base

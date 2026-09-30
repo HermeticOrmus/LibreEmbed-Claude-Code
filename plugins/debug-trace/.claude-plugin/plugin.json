@@ -1,0 +1,16 @@
+{
+  "name": "debug-trace",
+  "version": "1.0.0",
+  "description": "JTAG, SWD, printf debugging, trace analysis, fault handlers",
+  "author": {
+    "name": "Diego Bodart",
+    "url": "https://github.com/HermeticOrmus"
+  },
+  "homepage": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "license": "MIT",
+  "keywords": [
+    "debug",
+    "trace"
+  ]
+}

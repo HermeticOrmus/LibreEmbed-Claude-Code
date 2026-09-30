@@ -1,3 +1,8 @@
+---
+name: "debug-trace-patterns"
+description: "Practical debug patterns for ARM Cortex-M firmware."
+---
+
 # debug-trace-patterns
 
 ## Knowledge Base

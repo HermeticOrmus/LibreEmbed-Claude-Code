@@ -1,0 +1,16 @@
+{
+  "name": "iot-protocols",
+  "version": "1.0.0",
+  "description": "Connectivity is rarely \"just add WiFi.\" The choice between MQTT and CoAP depends on whether you need reliable delivery or low overhead.",
+  "author": {
+    "name": "Diego Bodart",
+    "url": "https://github.com/HermeticOrmus"
+  },
+  "homepage": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "license": "MIT",
+  "keywords": [
+    "iot",
+    "protocols"
+  ]
+}
