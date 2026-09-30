@@ -232,6 +232,17 @@ LibreEmbed 不会回传任何数据，除了工具链本身需要的账号之外
 
 ---
 
+## 贡献入口
+
+- 从 [Menu（任务菜单）](pantry/MENU.md) 领取下一项工作，或者从 [good first issue](https://github.com/HermeticOrmus/LibreEmbed-Claude-Code/contribute) 开始。
+- Claude 选错了代理或技能？提交一份 [路由错误报告（routing miss）](https://github.com/HermeticOrmus/LibreEmbed-Claude-Code/issues/new?template=routing-miss.yml)。
+- 想到了新插件？提交 [插件提案](https://github.com/HermeticOrmus/LibreEmbed-Claude-Code/issues/new?template=plugin-proposal.yml)。其他意见请用 [反馈表单](https://github.com/HermeticOrmus/LibreEmbed-Claude-Code/issues/new?template=feedback.yml)。
+- 在 [Discussions](https://github.com/HermeticOrmus/LibreEmbed-Claude-Code/discussions) 展示你的开发板和固件。
+
+如何认领任务、如何在本地测试改动：见 [Ways to contribute](CONTRIBUTING.md#ways-to-contribute)（英文）。
+
+---
+
 ## 参与贡献
 
 嵌入式领域很广。十五个插件只是起点，各插件的深度不一（每个插件的成熟度矩阵见 [CHANGELOG.md](CHANGELOG.md)）。特别欢迎以下方面的 PR：

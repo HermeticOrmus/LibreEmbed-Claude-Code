@@ -2,6 +2,14 @@
 
 All notable changes to LibreEmbed-Claude-Code.
 
+## [Unreleased]
+
+### Added
+
+- A public pantry in `pantry/`: a competitor map, an X mine, a people mine and a pantry queue, every row cited. `pantry/MENU.md`, generated from the queue, names the next piece of work anyone can take.
+- Two issue forms: routing miss (Claude picked the wrong agent or skill, or none) and plugin proposal.
+- A Ways to contribute section in CONTRIBUTING.md, with the local test loop, and a Contribute section in README.md and README.zh-CN.md.
+
 ## [1.0.0] - 2026-09-30
 
 First installable release. Before it, Claude Code could not load this pack: the plugins had no manifests, most agents and commands sat in nested folders Claude Code does not read, and `setup.sh` copied everything to a directory Claude Code ignores. 1.0.0 makes all fifteen plugins installable without dropping any content, and adds an optional hooks plugin.
