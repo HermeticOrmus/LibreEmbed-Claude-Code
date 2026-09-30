@@ -98,6 +98,12 @@
       "source": "./plugins/sensor-integration",
       "description": "Sensor integration: drivers from datasheets, calibration, digital filtering, Kalman filters, and IMU sensor fusion.",
       "version": "1.0.0"
+    },
+    {
+      "name": "libre-embed-hooks",
+      "source": "./plugins/libre-embed-hooks",
+      "description": "Optional safety hooks for firmware work: confirm before flash, erase, and secret-file operations, detect embedded projects at session start, and flag empty files after edits.",
+      "version": "1.0.0"
     }
   ]
 }
