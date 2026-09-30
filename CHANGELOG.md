@@ -2,6 +2,41 @@
 
 All notable changes to LibreEmbed-Claude-Code.
 
+## [1.0.0] - 2026-09-30
+
+First installable release. Before it, Claude Code could not load this pack: the plugins had no manifests, most agents and commands sat in nested folders Claude Code does not read, and `setup.sh` copied everything to a directory Claude Code ignores. 1.0.0 makes all fifteen plugins installable without dropping any content, and adds an optional hooks plugin.
+
+### Added
+
+- The `libre-embed` plugin marketplace (`.claude-plugin/marketplace.json`) and a `plugin.json` for every plugin. Install with `/plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code`, then `/plugin install <plugin>@libre-embed`.
+- `libre-embed-hooks`, an optional plugin. It asks before flash and erase commands (OpenOCD, st-flash, STM32CubeProgrammer CLI, pyOCD, nrfjprog, esptool, idf.py, west, dfu-util, avrdude, picotool, PlatformIO, J-Link Commander scripts, `make flash`) and before a file tool touches `.env`, `.pem`, `.key`, credentials, or secrets files; adds one context line when a session opens in a firmware project; and flags a file left empty by an edit. It writes no logs.
+- Code reference material in the `rtos-patterns`, `communication-buses`, and `iot-protocols` agents, commands, and skills, merged from older copies Claude Code could not see: FreeRTOS task, queue, mutex, event group, and notification code; STM32 HAL and LL examples for I2C, SPI, UART, CAN, and USB; ESP-IDF MQTT, Zephyr BLE GATT, LMIC LoRaWAN OTAA, libcoap, and Paho C clients; `FreeRTOSConfig.h` settings, a stack overflow hook, and rate monotonic analysis; and action shortcuts such as `/rtos design` and `/comm-bus configure`.
+- A LoRa airtime and duty cycle calculator in the `iot-protocols` skill, built on the Semtech time-on-air formula.
+- `README.zh-CN.md`, a Simplified Chinese translation of the README.
+- CI that validates the marketplace and every plugin, then installs all of them into a clean config, on each pull request.
+- A feedback issue form.
+
+### Changed
+
+- `setup.sh` installs through the Claude Code CLI (`claude plugin marketplace add`, `claude plugin install`) and supports `--list`, `--only`, `--scope`, `--uninstall`, and `--no-safety-hooks`. It needs `claude` and `jq`. `--plugins-dir` is still accepted but no longer used.
+- Agents, commands, and skills live where Claude Code loads them: `agents/<name>.md`, `commands/<name>.md`, `skills/<name>/SKILL.md`.
+- Every agent, command, and skill description is rewritten as routing text, so Claude Code can tell when to use each one. Commands show an argument hint.
+- `rtos-engineer`, `bus-driver-engineer`, and `iot-protocol-engineer` now use `model: inherit` instead of `sonnet`, like the other twelve agents, so they run on the model of your session.
+- The hook scripts moved from `hooks/` to `plugins/libre-embed-hooks/hooks/` and now read Claude Code's JSON hook input on stdin.
+- If you ran the 0.x `setup.sh`: delete the leftover `~/.claude/plugins/libre-embed-*` directories and `~/.claude/hooks/libre-embed-*.sh` scripts after installing 1.0.0. Claude Code never loaded them.
+
+### Fixed
+
+- CAN at 500 kbit/s from a 42 MHz clock: prescaler 6 with 1 + 11 + 2 time quanta. The old prescaler 5 with 15 quanta gave 560 kbit/s.
+- UART BRR for 115200 baud at 42 MHz is 0x16D (115,068 baud actual).
+- In the UART DMA pattern, `HAL_UARTEx_RxEventCallback` receives a buffer position, not a count since the last call.
+- LoRa airtime: the calculator, the air time table, and the SF9 and SF12 figures follow the Semtech formula, and the duty cycle arithmetic is corrected.
+- The `/iot` battery budget arithmetic, which undercounted TX and sleep charge.
+- The `/rtos` port notes said Zephyr semaphores inherit priority. They do not; mutexes do, in both RTOSes.
+- The `/rtos` sensor task now waits for its SPI DMA to finish before queueing a sample, the logger writes only the samples it received, and the Zephyr port defines its semaphore once.
+- The Paho C `messageArrived` callback returns `int`, the Python Paho example passes `CallbackAPIVersion.VERSION2` for paho-mqtt 2.x, MCP3204 accepts SPI mode 0 or 3, the ESP-IDF certificate comment names `EMBED_TXTFILES`, and the FreeRTOS state diagram shows `vTaskDelay` blocking rather than suspending.
+- QUICK_START promised a pre-flash warning hook that never ran. The `libre-embed-hooks` plugin now provides it.
+
 ## [0.2.0] — 2026-05-23
 
 Major content depth pass. The 15 plugin shells from v0.1 are being filled with real embedded systems content matching the LibreUIUX-Claude-Code substance bar.
