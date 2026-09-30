@@ -305,7 +305,7 @@ BRR[15:4] = integer part of USARTDIV
 BRR[3:0]  = fractional part * 16 (rounded)
 ```
 
-For 115200 baud on APB1 at 42MHz: USARTDIV = 22.786 → BRR = 0x16C
+For 115200 baud on APB1 at 42MHz: USARTDIV = 22.786 → mantissa 22 (0x16), fraction round(0.786 × 16) = 13 (0xD) → BRR = 0x16D
 
 ```c
 /* STM32 LL UART init, no HAL */
@@ -325,10 +325,12 @@ Flow control: RTS/CTS hardware flow control for high-speed UART (>1Mbit). RTS = 
 
 ```c
 /* STM32 HAL: configure 500kbit/s CAN1 on APB1 at 42MHz
-   TQ = 1/(42MHz / (BRP+1)) = 1/(42MHz/5) = ~119ns
-   Nominal: 1 sync + 12 tseg1 + 2 tseg2 = 15 TQ = 500kbit/s */
-hcan1.Init.Prescaler = 5;
-hcan1.Init.TimeSeg1  = CAN_BS1_12TQ;
+   HAL Prescaler is the divider itself (BRP register = Prescaler - 1)
+   TQ = 6 / 42MHz = ~142.9ns
+   Nominal: 1 sync + 11 tseg1 + 2 tseg2 = 14 TQ = 2000ns = 500kbit/s
+   Sample point: (1 + 11) / 14 = 85.7% */
+hcan1.Init.Prescaler = 6;
+hcan1.Init.TimeSeg1  = CAN_BS1_11TQ;
 hcan1.Init.TimeSeg2  = CAN_BS2_2TQ;
 hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
 hcan1.Init.Mode      = CAN_MODE_NORMAL;

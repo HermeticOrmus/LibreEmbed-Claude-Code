@@ -383,9 +383,9 @@ void uart_dma_init(UART_HandleTypeDef *hu)
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *hu, uint16_t size)
 {
-    /* size = number of bytes received since last callback */
-    /* DMA wrote to s_dma_rx[s_rx_wr .. s_rx_wr+size-1] (circular) */
-    s_rx_wr = (s_rx_wr + size) % DMA_RX_BUF;
+    /* size = write position in s_dma_rx (bytes from buffer start), not a  */
+    /* count since the last callback. size == DMA_RX_BUF means it wrapped.  */
+    s_rx_wr = size % DMA_RX_BUF;
 }
 
 uint16_t uart_available(void) {
@@ -444,7 +444,7 @@ hspi1.Init.CLKPhase    = SPI_PHASE_2EDGE;
 /* Always verify against the sensor's timing diagram.
    ICM-42688 (IMU): Mode 0 or Mode 3
    W25Q128 (Flash): Mode 0 or Mode 3
-   MCP3204 (ADC):   Mode 0 only           */
+   MCP3204 (ADC):   Mode 0 or Mode 3      */
 ```
 
 ## Anti-patterns

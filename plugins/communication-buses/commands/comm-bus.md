@@ -311,14 +311,14 @@ USARTDIV = 42,000,000 / (16 * 115200) = 22.786
 BRR mantissa = 22    = 0x16
 BRR fraction = 0.786 * 16 = 12.58 ≈ 13 = 0xD
 BRR register = 0x16D (22 * 16 + 13 = 365 = 0x16D)
-Actual baud  = 42,000,000 / (16 * 22.8125) = 115,107 (-0.08% error)
+Actual baud  = 42,000,000 / (16 * 22.8125) = 115,068 (-0.11% error)
 ```
 
 ### CAN bit timing at 500 kbit/s (APB1 42 MHz)
 ```
-TQ = 1 / (42 MHz / (BRP+1)) = 1 / (42 MHz / 5) ≈ 119 ns
-Bit time = 1 / 500 kbit/s = 2000 ns = 16.8 TQ ≈ 15 TQ with prescaler=6
-15 TQ: 1 sync + 12 BS1 + 2 BS2 = 15 TQ → sample point at 86.7%
+Prescaler = 6 (BRP register = 5): TQ = 6 / 42 MHz ≈ 142.9 ns
+Bit time = 1 / 500 kbit/s = 2000 ns = 14 TQ
+14 TQ: 1 sync + 11 BS1 + 2 BS2 → sample point at (1 + 11) / 14 = 85.7%
 ```
 
 ## Common errors

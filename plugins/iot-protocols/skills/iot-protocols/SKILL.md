@@ -210,18 +210,18 @@ Larger MTU = fewer fragments = lower latency for large transfers. Request MTU du
 
 ### Air time table (EU 868 MHz, SF7-SF12)
 
-For a 13-byte payload:
+For a 13-byte application payload (26 bytes on air after the 13-byte LoRaWAN header and MIC), 125 kHz, coding rate 4/5, 8-symbol preamble, low data rate optimization on at SF11 and SF12:
 
 | SF | Time on air | Sensitivity | Range |
 |---|---|---|---|
-| 7 | 56 ms | -123 dBm | ~2 km open field |
-| 8 | 103 ms | -126 dBm | ~3 km |
-| 9 | 185 ms | -129 dBm | ~5 km |
-| 10 | 329 ms | -132 dBm | ~7 km |
-| 11 | 660 ms | -134.5 dBm | ~10 km |
-| 12 | 1318 ms | -137 dBm | ~15 km |
+| 7 | 62 ms | -123 dBm | ~2 km open field |
+| 8 | 113 ms | -126 dBm | ~3 km |
+| 9 | 206 ms | -129 dBm | ~5 km |
+| 10 | 412 ms | -132 dBm | ~7 km |
+| 11 | 823 ms | -134.5 dBm | ~10 km |
+| 12 | 1647 ms | -137 dBm | ~15 km |
 
-EU 868 1% duty cycle means at SF12 a device can send 36 × 1318 ms = 47 seconds per hour = once every ~100 seconds at the lowest data rate. ADR is essential.
+EU 868 1% duty cycle allows 36 s of airtime per hour. At SF12 that is 36 / 1.647 s ≈ 21 uplinks per hour, at most one every ~163 seconds (99 × the airtime off after each uplink). ADR is essential.
 
 ### Class trade-offs
 
@@ -311,13 +311,14 @@ On connect, publish: `device/{id}/status` = `{"online":true}` retained.
 static MQTTClient     s_client;
 static MQTTClient_connectOptions s_conn_opts = MQTTClient_connectOptions_initializer;
 
-void mqtt_message_arrived(void *ctx, char *topic, int topic_len,
-                           MQTTClient_message *msg)
+int mqtt_message_arrived(void *ctx, char *topic, int topic_len,
+                          MQTTClient_message *msg)
 {
     /* Process command from broker */
     handle_command(topic, msg->payload, msg->payloadlen);
     MQTTClient_freeMessage(&msg);
     MQTTClient_free(topic);
+    return 1;   /* 1 = message handled; 0 asks the library to deliver it again */
 }
 
 int mqtt_init(void)
@@ -384,36 +385,42 @@ EU868 regulations: 1% duty cycle on most sub-bands.
 
 import math
 
-def lorawan_airtime_ms(payload_bytes, sf, bw_khz=125, cr=1, explicit_header=True):
-    """Semtech SX1276 airtime formula"""
-    t_sym = (2**sf) / (bw_khz * 1000) * 1000  # ms per symbol
-    n_preamble = 8 + 4.25  # preamble symbols
-    t_preamble = n_preamble * t_sym
+LORAWAN_OVERHEAD = 13  # MHDR 1 + DevAddr 4 + FCtrl 1 + FCnt 2 + FPort 1 + MIC 4 (no FOpts)
 
-    header = 0 if not explicit_header else 1
+def lora_airtime_ms(phy_payload_bytes, sf, bw_khz=125, cr=1, explicit_header=True,
+                    crc=True, preamble_symbols=8):
+    """Semtech SX1276 time-on-air formula. cr=1 means coding rate 4/5."""
+    t_sym = (2**sf) / (bw_khz * 1000) * 1000   # ms per symbol
+    t_preamble = (preamble_symbols + 4.25) * t_sym
+
+    ih = 0 if explicit_header else 1           # IH is 1 only for implicit header mode
+    de = 1 if t_sym > 16 else 0                # low data rate optimization (SF11/SF12 at 125 kHz)
     payload_symb = 8 + max(
-        math.ceil((8 * payload_bytes - 4*sf + 28 + 16 - 20*header) / (4*(sf-2))) * (cr+4),
+        math.ceil((8 * phy_payload_bytes - 4*sf + 28 + 16*crc - 20*ih) / (4*(sf - 2*de))) * (cr + 4),
         0
     )
-    t_payload = payload_symb * t_sym
-    return t_preamble + t_payload
+    return t_preamble + payload_symb * t_sym
 
-# SF7, 125kHz, 10 bytes payload
-at_ms = lorawan_airtime_ms(10, 7)
-print(f"SF7: {at_ms:.0f}ms airtime")                    # ~46ms
-print(f"Max rate (1% duty): {1000/at_ms:.1f} msg/min") # ~1300/hr
+def max_uplinks_per_hour(airtime_ms, duty_cycle=0.01):
+    return duty_cycle * 3_600_000 / airtime_ms
 
-# SF12, 125kHz, 10 bytes
-at_ms = lorawan_airtime_ms(10, 12)
-print(f"SF12: {at_ms:.0f}ms airtime")                   # ~1810ms
-print(f"Max rate (1% duty): {60/at_ms*1000:.1f} msg/hr") # ~33/hr
+# SF7, 125kHz, 10-byte application payload
+at_ms = lora_airtime_ms(10 + LORAWAN_OVERHEAD, 7)
+print(f"SF7: {at_ms:.0f}ms airtime")                                    # ~62ms
+print(f"Max rate (1% duty): {max_uplinks_per_hour(at_ms):.0f} msg/hr")  # ~584/hr
+
+# SF12, 125kHz, 10-byte application payload
+at_ms = lora_airtime_ms(10 + LORAWAN_OVERHEAD, 12)
+print(f"SF12: {at_ms:.0f}ms airtime")                                   # ~1483ms
+print(f"Max rate (1% duty): {max_uplinks_per_hour(at_ms):.0f} msg/hr")  # ~24/hr
 ```
 
 ### MQTT Over TLS with Client Certificate
 
 ```c
 /* Embed server CA, device certificate and private key as C arrays */
-/* Generated with: xxd -i ca.pem > ca_pem.h */
+/* Listed under EMBED_TXTFILES in the component CMakeLists.txt; ESP-IDF */
+/* then generates the _binary_<file>_start symbols (null-terminated).    */
 
 extern const uint8_t mqtt_ca_pem[]     asm("_binary_ca_pem_start");
 extern const uint8_t mqtt_cert_pem[]   asm("_binary_cert_pem_start");

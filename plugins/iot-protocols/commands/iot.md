@@ -119,15 +119,17 @@ For BLE:
 Walk through:
 
 ```
-Active TX: 100 mA × 50 ms × 4 transmissions/day = 5.6 mA·sec/day
+Active TX: 100 mA × 50 ms × 4 transmissions/day = 20 mA·sec/day
 Active RX: 30 mA × 200 ms × 4 RX windows/day = 24 mA·sec/day
-Sleep current: 2 µA × 86400 sec/day = 0.17 mA·sec/day
-Total per day: ~30 mA·sec = 30/3600 mAh/day = 0.0083 mAh/day
+Sleep current: 2 µA × 86400 sec/day = 172.8 mA·sec/day
+Total per day: ~217 mA·sec = 217/3600 mAh/day = 0.060 mAh/day
 
 Battery: 2400 mAh × 0.7 efficiency factor = 1680 mAh available
-Lifetime: 1680 / 0.0083 / 365 = 555 years (theoretical)
+Lifetime: 1680 / 0.060 / 365 = 76 years (theoretical)
 
-Practical degradation: 5× = 111 years. Way over 2-year target. OK.
+Practical degradation: 5× = ~15 years. Way over 2-year target. OK.
+Note: sleep is ~80% of the daily charge here, so the sleep floor, not the radio,
+sets battery life. Cell self-discharge caps real life below the theoretical figure.
 ```
 
 If the calc shows the target won't be met, name which transmission to reduce, which sleep mode to deepen, or which protocol to switch to.
@@ -267,7 +269,7 @@ import paho.mqtt.client as mqtt
 def on_message(client, userdata, msg):
     print(f"{msg.topic}: {msg.payload.decode()}")
 
-client = mqtt.Client()
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)  # paho-mqtt 2.x
 client.tls_set(ca_certs="ca.pem")
 client.username_pw_set("user", "pass")
 client.on_message = on_message
@@ -279,9 +281,11 @@ client.loop_forever()
 ### LoRaWAN airtime check
 ```python
 # Before deployment: verify duty cycle compliance
-# 10-byte payload, SF9, EU868
-airtime_ms = lorawan_airtime_ms(10, sf=9)
-# SF9: ~329ms → max ~110 uplinks/hour at 1% duty cycle
+# 10-byte application payload, SF9, 125 kHz, EU868
+# lora_airtime_ms() is the Semtech time-on-air formula; the full function is in the
+# iot-protocols skill ("LoRaWAN duty cycle calculator").
+airtime_ms = lora_airtime_ms(10 + 13, sf=9)   # +13 bytes LoRaWAN header and MIC
+# SF9: ~206 ms -> max ~175 uplinks/hour at 1% duty cycle (36 s of airtime per hour)
 ```
 
 ## Common errors
