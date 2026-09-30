@@ -28,7 +28,7 @@ Stars and forks are not feedback and are not counted as voices. This aggregate i
 
 ## Read log (what we read)
 
-- Issues and pull requests, all states (`gh api repos/HermeticOrmus/LibreEmbed-Claude-Code/issues?state=all`): #1 Release v1.0.0 (maintainer, closed), #2 v1.0.0 marketplace PR (maintainer, merged), #3 Open the kitchen (maintainer, open). 0 outside authors.
+- Issues and pull requests, all states (`gh api repos/HermeticOrmus/LibreEmbed-Claude-Code/issues?state=all`): #1 Release v1.0.0 (maintainer, closed), #2 v1.0.0 marketplace PR (maintainer, merged), #3 Open the kitchen (maintainer, open), #4 to #6 good first issues on ESP32, plugin README usage and Simplified Chinese docs (maintainer, open), #7 this kitchen PR. 0 outside authors.
 - Issue comments (`/issues/comments`): 1, by the maintainer, on #1. 0 outside.
 - Pull request review comments (`/pulls/comments`): 0.
 - Issues with the `feedback` label: 0.
