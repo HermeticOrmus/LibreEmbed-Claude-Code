@@ -1,113 +1,87 @@
 #!/usr/bin/env bash
 # LibreEmbed-Claude-Code installer.
-# Copies the 15 embedded systems plugins into your Claude Code plugins directory.
 #
-# Usage: ./setup.sh [--plugins-dir <path>] [--only <p1,p2,p3>] [--no-safety-hooks]
+# Registers this checkout as a Claude Code plugin marketplace and installs its
+# plugins through the Claude Code CLI, so Claude Code actually loads them.
+# It does the same thing as running, inside Claude Code:
+#   /plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code
+#   /plugin install <plugin>@libre-embed
 #
-# Defaults:
-#   --plugins-dir = $CLAUDE_PLUGINS_DIR or ~/.claude/plugins
-#   --only        = all 15 plugins
-#   safety hooks  = installed (pre-flash warnings)
-
+# Usage:
+#   ./setup.sh                      install every plugin
+#   ./setup.sh --only p1,p2         install only the named plugins
+#   ./setup.sh --list               list the plugins in this pack
+#   ./setup.sh --scope project      install for this project only (user|project|local)
+#   ./setup.sh --no-safety-hooks    skip the optional libre-embed-hooks plugin
+#   ./setup.sh --uninstall          remove this pack's plugins and marketplace
 set -euo pipefail
-IFS=$'\n\t'
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PLUGINS_SRC="$SCRIPT_DIR/plugins"
-HOOKS_SRC="$SCRIPT_DIR/hooks"
-PLUGINS_DST="${CLAUDE_PLUGINS_DIR:-$HOME/.claude/plugins}"
-HOOKS_DST="$HOME/.claude/hooks"
-
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+MANIFEST="$REPO_DIR/.claude-plugin/marketplace.json"
 ONLY=""
-INSTALL_HOOKS=1
+LIST=0
+UNINSTALL=0
+SCOPE="user"
+NO_HOOKS=0
+HOOKS_PLUGIN="libre-embed-hooks"
 
-while (( $# )); do
+usage() { sed -n '2,16p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
+
+while [[ $# -gt 0 ]]; do
   case "$1" in
-    --plugins-dir)     PLUGINS_DST="$2"; shift 2;;
-    --only)            ONLY="$2"; shift 2;;
-    --no-safety-hooks) INSTALL_HOOKS=0; shift;;
-    -h|--help)
-      cat <<EOF
-Usage: $0 [options]
-
-Options:
-  --plugins-dir <path>       Plugin destination (default: ~/.claude/plugins)
-  --only p1,p2,p3            Install only the named plugins (default: all 15)
-  --no-safety-hooks          Skip installing pre-flash warning hooks
-
-Examples:
-  $0
-  $0 --only rtos-patterns,communication-buses,iot-protocols
-  $0 --plugins-dir ~/custom/claude/plugins
-EOF
-      exit 0;;
-    *) echo "Unknown arg: $1" >&2; exit 64;;
+    --only) ONLY="${2:?--only needs a comma-separated list}"; shift 2 ;;
+    --list) LIST=1; shift ;;
+    --scope) SCOPE="${2:?--scope needs user, project, or local}"; shift 2 ;;
+    --uninstall) UNINSTALL=1; shift ;;
+    --no-safety-hooks) NO_HOOKS=1; shift ;;
+    --plugins-dir)
+      echo "note: --plugins-dir is no longer used; Claude Code manages plugin storage itself." >&2
+      shift 2 ;;
+    -h|--help) usage; exit 0 ;;
+    *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
 done
 
-if [[ ! -d "$PLUGINS_SRC" ]]; then
-  echo "ERROR: plugins source not found at $PLUGINS_SRC" >&2
-  echo "Run from the repo root." >&2
-  exit 1
+command -v claude >/dev/null 2>&1 || { echo "error: the Claude Code CLI (claude) is not on PATH. Install it first: https://docs.claude.com/en/docs/claude-code" >&2; exit 1; }
+command -v jq >/dev/null 2>&1 || { echo "error: jq is required (sudo apt install jq / brew install jq)." >&2; exit 1; }
+
+MARKETPLACE="$(jq -r '.name' "$MANIFEST")"
+mapfile -t ALL < <(jq -r '.plugins[].name' "$MANIFEST")
+
+if (( LIST )); then
+  jq -r '.plugins[] | "\(.name)\t\(.description)"' "$MANIFEST" | column -t -s $'\t'
+  exit 0
 fi
 
-mkdir -p "$PLUGINS_DST"
-
-# Build the list of plugins to install
+SELECTED=("${ALL[@]}")
+if (( NO_HOOKS )) && [[ -z "$ONLY" ]]; then
+  SELECTED=()
+  for p in "${ALL[@]}"; do [[ "$p" == "$HOOKS_PLUGIN" ]] || SELECTED+=("$p"); done
+fi
 if [[ -n "$ONLY" ]]; then
   IFS=',' read -r -a SELECTED <<< "$ONLY"
-else
-  SELECTED=()
-  for d in "$PLUGINS_SRC"/*/; do
-    SELECTED+=("$(basename "$d")")
+  for p in "${SELECTED[@]}"; do
+    printf '%s\n' "${ALL[@]}" | grep -qx "$p" || { echo "error: '$p' is not a plugin in this pack (see --list)" >&2; exit 1; }
   done
 fi
 
-echo "Installing LibreEmbed plugins:"
-echo "  Source: $PLUGINS_SRC"
-echo "  Target: $PLUGINS_DST"
-echo "  Plugins: ${#SELECTED[@]}"
-echo ""
+if (( UNINSTALL )); then
+  for p in "${SELECTED[@]}"; do claude plugin uninstall "$p@$MARKETPLACE" || true; done
+  [[ -z "$ONLY" ]] && claude plugin marketplace remove "$MARKETPLACE" || true
+  echo "Removed. Restart Claude Code to unload the plugins."
+  exit 0
+fi
 
-count=0
-for name in "${SELECTED[@]}"; do
-  src="$PLUGINS_SRC/$name"
-  dst="$PLUGINS_DST/libre-embed-$name"
+if claude plugin marketplace list 2>/dev/null | grep -q "$MARKETPLACE"; then
+  claude plugin marketplace update "$MARKETPLACE"
+else
+  claude plugin marketplace add "$REPO_DIR"
+fi
 
-  if [[ ! -d "$src" ]]; then
-    echo "  [skip] $name (not found in plugins/)"
-    continue
-  fi
-
-  if [[ -d "$dst" ]]; then
-    echo "  [skip] libre-embed-$name (already installed — remove first to reinstall)"
-    continue
-  fi
-
-  cp -r "$src" "$dst"
-  echo "  [ok]   libre-embed-$name"
-  count=$((count + 1))
+for p in "${SELECTED[@]}"; do
+  claude plugin install "$p@$MARKETPLACE" --scope "$SCOPE"
 done
 
-# Install safety hooks
-if (( INSTALL_HOOKS )) && [[ -d "$HOOKS_SRC" ]]; then
-  mkdir -p "$HOOKS_DST"
-  for h in "$HOOKS_SRC"/*.sh; do
-    [[ -f "$h" ]] || continue
-    cp "$h" "$HOOKS_DST/libre-embed-$(basename "$h")"
-    chmod +x "$HOOKS_DST/libre-embed-$(basename "$h")"
-  done
-  echo ""
-  echo "Safety hooks installed to $HOOKS_DST (pre-flash warnings active)."
-  echo "Disable with --no-safety-hooks on next install."
-fi
-
-echo ""
-echo "Installed $count plugins."
-echo ""
-echo "Restart Claude Code, then try:"
-echo "  /rtos design a task structure for a sensor logger"
-echo "  /comm-bus write an SPI driver for an IMU"
-echo "  /iot configure MQTT QoS for unreliable cellular links"
-echo ""
-echo "Documentation: README.md, QUICK_START.md, learning-paths/"
+echo
+echo "Installed ${#SELECTED[@]} plugin(s) from $MARKETPLACE. Restart Claude Code to load them."
+echo "Tell us what worked and what is missing: https://github.com/HermeticOrmus/LibreEmbed-Claude-Code/issues/new?template=feedback.yml"
