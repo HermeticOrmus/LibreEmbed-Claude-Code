@@ -46,6 +46,19 @@ claude plugin list | grep -c '@libre-embed'
 # Should print 16 after ./setup.sh (15 plugins plus libre-embed-hooks)
 ```
 
+### Install in Grok Build
+
+Grok Build loads the same plugin folders. From a terminal:
+
+```bash
+grok plugin marketplace add HermeticOrmus/LibreEmbed-Claude-Code
+grok plugin install rtos-patterns@libre-embed
+grok plugin install arm-cortex-m@libre-embed
+grok plugin install communication-buses@libre-embed
+```
+
+Or install one plugin straight from its folder: `grok plugin install HermeticOrmus/LibreEmbed-Claude-Code#plugins/rtos-patterns`. From the clone, `./setup.sh --grok` installs all 16 through the `grok` CLI, and `grok plugin list` shows them. The `libre-embed-hooks` plugin uses a hook format Grok Build supports, but it has not been verified in a live Grok session yet, so do not count on the pre-flash prompt there.
+
 ## 2. Open Claude Code at your firmware project root
 
 If you don't have a project yet, scaffold one:
