@@ -1,0 +1,51 @@
+name: Plugin proposal
+description: Propose a new plugin, agent, skill or command for this pack.
+title: "[Proposal] "
+labels: ["plugin-proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Good proposals name a real job people do in this domain, what Claude gets wrong today without it, and how anyone could check it works. Accepted proposals can become Menu items that you or someone else builds.
+  - type: input
+    id: name
+    attributes:
+      label: Working name
+      placeholder: "kebab-case, e.g. embedded-rust"
+    validations:
+      required: true
+  - type: textarea
+    id: job
+    attributes:
+      label: The job it does
+      description: Who needs it, and what they are trying to get done.
+      placeholder: "Firmware developers writing no_std Rust for Cortex-M parts need help with cortex-m-rt, probe-rs and defmt."
+    validations:
+      required: true
+  - type: textarea
+    id: gap
+    attributes:
+      label: What goes wrong today without it
+      placeholder: "Claude writes C-style register access in unsafe blocks and does not know how to flash and log with probe-rs."
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: A check anyone could run to see it works. For example, a prompt, the agent or skill that should answer, and what the answer must contain.
+      placeholder: "Asking 'set up an embassy blinky for an nRF52840' routes to embedded-rust:<agent>, and the answer builds with cargo build --release."
+    validations:
+      required: true
+  - type: textarea
+    id: prior
+    attributes:
+      label: Prior art
+      description: Other packs, tools or docs that do something similar, with links.
+      placeholder: "Links to other Claude Code plugins, Cursor rules, MCP servers, crates or vendor docs."
+  - type: checkboxes
+    id: build
+    attributes:
+      label: Want to build it?
+      options:
+        - label: I would like to build this and open a pull request.
