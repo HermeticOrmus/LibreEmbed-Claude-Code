@@ -1,0 +1,19 @@
+{
+  "name": "libre-embed-hooks",
+  "version": "1.0.0",
+  "description": "Optional safety hooks for firmware work: confirm before flash, erase, and secret-file operations, detect embedded projects at session start, and flag empty files after edits.",
+  "author": {
+    "name": "Diego Bodart",
+    "url": "https://github.com/HermeticOrmus"
+  },
+  "homepage": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "repository": "https://github.com/HermeticOrmus/LibreEmbed-Claude-Code",
+  "license": "MIT",
+  "keywords": [
+    "embedded",
+    "hooks",
+    "safety",
+    "flash",
+    "secrets"
+  ]
+}
