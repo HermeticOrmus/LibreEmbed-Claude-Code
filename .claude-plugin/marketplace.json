@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Embedded systems, firmware, and IoT plugins for Claude Code, from bare metal to RTOS.",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
