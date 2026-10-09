@@ -234,7 +234,7 @@ OTA updates that don't brick devices. Watchdog patterns that catch real failures
 - **Claude Code**: a release with plugin marketplaces (`/plugin`); this release was verified with Claude Code 2.1.285. `setup.sh` and the hooks plugin also need `jq`.
 - **Grok Build**: `grok` 1.0.44 validates and installs all 16 plugins. The hooks plugin is unverified in a live Grok session.
 - **Toolchains**: GCC ARM (any recent version), Clang/LLVM with embedded targets, Zephyr SDK, ESP-IDF, STM32CubeIDE, Microchip XC32, Renesas e² studio
-- **MCU families covered**: ARM Cortex-M0/M0+/M3/M4/M7/M33 (STM32, NXP LPC + Kinetis + i.MX RT, Nordic nRF, Microchip SAM, RP2040, ESP32, Renesas RA), MSP430 (light), AVR (light)
+- **MCU families covered**: ARM Cortex-M0/M0+/M3/M4/M7/M33 (STM32, NXP LPC + Kinetis + i.MX RT, Nordic nRF, Microchip SAM, RP2040, Renesas RA), Espressif ESP32 with Xtensa cores (ESP32, ESP32-S2, ESP32-S3) or RISC-V cores (ESP32-C and ESP32-H series), MSP430 (light), AVR (light)
 - **RTOS coverage**: FreeRTOS (deep), Zephyr (deep), ThreadX (moderate), RT-Thread (light)
 - **Build systems**: Make, CMake, PlatformIO, Zephyr west, ESP-IDF idf.py
 - **Debuggers**: SEGGER J-Link (preferred), ST-Link, CMSIS-DAP, Black Magic Probe, JLink-OB
