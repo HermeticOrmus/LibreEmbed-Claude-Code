@@ -234,7 +234,7 @@ cd ~/projects/LibreEmbed-Claude-Code
 - **Claude Code**：支持插件市场（`/plugin`）的版本；本次发布已在 Claude Code 2.1.285 上验证。`setup.sh` 和钩子插件还需要 `jq`。
 - **Grok Build**：`grok` 1.0.44 可以校验并安装全部 16 个插件。钩子插件尚未在真实的 Grok 会话中验证。
 - **工具链**：GCC ARM（任何较新版本）、带嵌入式目标的 Clang/LLVM、Zephyr SDK、ESP-IDF、STM32CubeIDE、Microchip XC32、Renesas e² studio
-- **覆盖的 MCU 系列**：ARM Cortex-M0/M0+/M3/M4/M7/M33（STM32、NXP LPC + Kinetis + i.MX RT、Nordic nRF、Microchip SAM、RP2040、ESP32、Renesas RA），MSP430（少量），AVR（少量）
+- **覆盖的 MCU 系列**：ARM Cortex-M0/M0+/M3/M4/M7/M33（STM32、NXP LPC + Kinetis + i.MX RT、Nordic nRF、Microchip SAM、RP2040、Renesas RA），采用 Xtensa 内核（ESP32、ESP32-S2、ESP32-S3）或 RISC-V 内核（ESP32-C 和 ESP32-H 系列）的乐鑫 ESP32，MSP430（少量），AVR（少量）
 - **RTOS 覆盖**：FreeRTOS（深入）、Zephyr（深入）、ThreadX（中等）、RT-Thread（少量）
 - **构建系统**：Make、CMake、PlatformIO、Zephyr west、ESP-IDF idf.py
 - **调试器**：SEGGER J-Link（推荐）、ST-Link、CMSIS-DAP、Black Magic Probe、JLink-OB
