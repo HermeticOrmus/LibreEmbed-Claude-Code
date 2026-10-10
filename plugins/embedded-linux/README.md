@@ -8,7 +8,7 @@ Yocto, Buildroot, device trees, kernel modules
 - **Embedded Linux Engineer** - Specialized agent for Yocto, Buildroot, device trees, kernel modules
 
 ### Commands
-- `/embedded-linux` - Quick-access command for embedded-linux workflows
+- `/embedded-linux:embedded-linux` - Quick-access command for embedded-linux workflows
 
 ### Skills
 - **Embedded Linux Patterns** - Pattern library and knowledge base for embedded-linux
@@ -23,11 +23,11 @@ Yocto, Buildroot, device trees, kernel modules
 ## Usage Examples
 
 ```
-# Use the command directly
-/embedded-linux analyze
+# Generate a Yocto build configuration
+/embedded-linux:embedded-linux build --bsp imx6ul --distro yocto --image core-image-minimal
 
-# Use the command with specific input
-/embedded-linux generate --context "your project"
+# Generate a kernel module skeleton
+/embedded-linux:embedded-linux module --type platform --name mydriver --bus i2c
 
 # Reference patterns from the skill
 "Apply embedded-linux-patterns patterns to this implementation"

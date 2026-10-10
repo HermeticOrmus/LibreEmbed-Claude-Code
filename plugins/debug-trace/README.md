@@ -8,7 +8,7 @@ JTAG, SWD, printf debugging, trace analysis, fault handlers
 - **Debug Engineer** - Specialized agent for JTAG, SWD, printf debugging, trace analysis, fault handlers
 
 ### Commands
-- `/debug-embedded` - Quick-access command for debug-trace workflows
+- `/debug-trace:debug-embedded` - Quick-access command for debug-trace workflows
 
 ### Skills
 - **Debug Trace Patterns** - Pattern library and knowledge base for debug-trace
@@ -23,11 +23,11 @@ JTAG, SWD, printf debugging, trace analysis, fault handlers
 ## Usage Examples
 
 ```
-# Use the command directly
-/debug-embedded analyze
+# Generate debugger connection commands
+/debug-trace:debug-embedded attach --probe stlink --target stm32f4x
 
-# Use the command with specific input
-/debug-embedded generate --context "your project"
+# Inspect registers on a halted target
+/debug-trace:debug-embedded halt --dump-registers
 
 # Reference patterns from the skill
 "Apply debug-trace-patterns patterns to this implementation"

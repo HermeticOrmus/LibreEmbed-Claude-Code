@@ -14,7 +14,7 @@ Connectivity is rarely "just add WiFi." The choice between MQTT and CoAP depends
 
 ### Commands
 
-- **/iot** -- Protocol selection + protocol layer design. Hand it the problem (power budget, data rate, range, reliability) and it returns a protocol recommendation with the reasoning, plus a draft of the protocol-layer code.
+- **/iot-protocols:iot** -- Protocol selection + protocol layer design. Hand it the problem (power budget, data rate, range, reliability) and it returns a protocol recommendation with the reasoning, plus a draft of the protocol-layer code.
 
 ### Skills
 

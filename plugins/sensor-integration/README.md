@@ -8,7 +8,7 @@ Sensor drivers, calibration, filtering, fusion algorithms
 - **Sensor Engineer** - Specialized agent for Sensor drivers, calibration, filtering, fusion algorithms
 
 ### Commands
-- `/sensor` - Quick-access command for sensor-integration workflows
+- `/sensor-integration:sensor` - Quick-access command for sensor-integration workflows
 
 ### Skills
 - **Sensor Patterns** - Pattern library and knowledge base for sensor-integration
@@ -23,11 +23,11 @@ Sensor drivers, calibration, filtering, fusion algorithms
 ## Usage Examples
 
 ```
-# Use the command directly
-/sensor analyze
+# Generate a BME280 I2C driver
+/sensor-integration:sensor driver --part bme280 --bus i2c --addr 0x76
 
-# Use the command with specific input
-/sensor generate --context "your project"
+# Generate two-point temperature calibration
+/sensor-integration:sensor calibrate --method 2-point --units celsius --range "-40,85"
 
 # Reference patterns from the skill
 "Apply sensor-patterns patterns to this implementation"

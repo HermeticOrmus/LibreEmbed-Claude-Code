@@ -8,7 +8,7 @@ OTA updates, firmware versioning, rollback mechanisms
 - **Fota Engineer** - Specialized agent for OTA updates, firmware versioning, rollback mechanisms
 
 ### Commands
-- `/firmware-update` - Quick-access command for firmware-update workflows
+- `/firmware-update:firmware-update` - Quick-access command for firmware-update workflows
 
 ### Skills
 - **Firmware Update Patterns** - Pattern library and knowledge base for firmware-update
@@ -23,11 +23,11 @@ OTA updates, firmware versioning, rollback mechanisms
 ## Usage Examples
 
 ```
-# Use the command directly
-/firmware-update analyze
+# Package a signed firmware image
+/firmware-update:firmware-update package --tool imgtool --key ecdsa-p256.pem --version 2.1.0 --slot-size 0x70000
 
-# Use the command with specific input
-/firmware-update generate --context "your project"
+# Design firmware distribution over MQTT
+/firmware-update:firmware-update distribute --transport mqtt --broker mosquitto --topic-prefix device/fw
 
 # Reference patterns from the skill
 "Apply firmware-update-patterns patterns to this implementation"

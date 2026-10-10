@@ -21,7 +21,7 @@ Covered RTOSes:
 
 ### Commands
 
-- **/rtos** -- Task design + IPC sizing + synchronization recipe. Hand it a problem statement with real numbers (sample rates, data sizes, latency budgets) and it returns a concrete task graph with priorities, IPC primitives, and the reasons behind each choice.
+- **/rtos-patterns:rtos** -- Task design + IPC sizing + synchronization recipe. Hand it a problem statement with real numbers (sample rates, data sizes, latency budgets) and it returns a concrete task graph with priorities, IPC primitives, and the reasons behind each choice.
 
 ### Skills
 

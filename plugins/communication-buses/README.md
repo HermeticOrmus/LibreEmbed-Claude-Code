@@ -14,7 +14,7 @@ Bus drivers look simple until you ship one. Then I2C clock stretching kills your
 
 ### Commands
 
-- **/comm-bus** -- Driver design and debug. Hand it a bus + a problem and it returns a driver structure, init sequence, error-handling pattern, and DMA strategy where appropriate.
+- **/communication-buses:comm-bus** -- Driver design and debug. Hand it a bus + a problem and it returns a driver structure, init sequence, error-handling pattern, and DMA strategy where appropriate.
 
 ### Skills
 

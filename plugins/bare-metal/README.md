@@ -8,7 +8,7 @@ Bare metal programming, register manipulation, linker scripts
 - **Bare Metal Engineer** - Specialized agent for Bare metal programming, register manipulation, linker scripts
 
 ### Commands
-- `/bare-metal` - Quick-access command for bare-metal workflows
+- `/bare-metal:bare-metal` - Quick-access command for bare-metal workflows
 
 ### Skills
 - **Bare Metal Patterns** - Pattern library and knowledge base for bare-metal
@@ -23,11 +23,11 @@ Bare metal programming, register manipulation, linker scripts
 ## Usage Examples
 
 ```
-# Use the command directly
-/bare-metal analyze
+# Scaffold a bare-metal project
+/bare-metal:bare-metal init --mcu stm32f407vg --flash 1024K --sram 128K --ccm 64K
 
-# Use the command with specific input
-/bare-metal generate --context "your project"
+# Analyze code size from a map file
+/bare-metal:bare-metal optimize --map firmware.map --target flash
 
 # Reference patterns from the skill
 "Apply bare-metal-patterns patterns to this implementation"
