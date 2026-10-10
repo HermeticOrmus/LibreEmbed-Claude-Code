@@ -8,7 +8,7 @@ Static allocation, memory pools, stack/heap analysis, MPU
 - **Memory Engineer** - Specialized agent for Static allocation, memory pools, stack/heap analysis, MPU
 
 ### Commands
-- `/memory` - Quick-access command for memory-management workflows
+- `/memory-management:memory` - Quick-access command for memory-management workflows
 
 ### Skills
 - **Memory Mgmt Patterns** - Pattern library and knowledge base for memory-management
@@ -23,11 +23,11 @@ Static allocation, memory pools, stack/heap analysis, MPU
 ## Usage Examples
 
 ```
-# Use the command directly
-/memory analyze
+# Analyze memory usage from an ELF file
+/memory-management:memory analyze --elf firmware.elf
 
-# Use the command with specific input
-/memory generate --context "your project"
+# Generate a fixed-block memory pool
+/memory-management:memory pool --type msg_t --count 32 --thread-safe freertos
 
 # Reference patterns from the skill
 "Apply memory-mgmt-patterns patterns to this implementation"

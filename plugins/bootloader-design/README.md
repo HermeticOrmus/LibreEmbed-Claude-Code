@@ -8,7 +8,7 @@ Bootloader architecture, firmware update mechanisms, secure boot
 - **Bootloader Engineer** - Specialized agent for Bootloader architecture, firmware update mechanisms, secure boot
 
 ### Commands
-- `/bootloader` - Quick-access command for bootloader-design workflows
+- `/bootloader-design:bootloader` - Quick-access command for bootloader-design workflows
 
 ### Skills
 - **Bootloader Patterns** - Pattern library and knowledge base for bootloader-design
@@ -23,11 +23,11 @@ Bootloader architecture, firmware update mechanisms, secure boot
 ## Usage Examples
 
 ```
-# Use the command directly
-/bootloader analyze
+# Design a dual-bank bootloader
+/bootloader-design:bootloader design --mcu stm32f407 --banks dual --transport uart
 
-# Use the command with specific input
-/bootloader generate --context "your project"
+# Generate image verification code
+/bootloader-design:bootloader verify --method crc32
 
 # Reference patterns from the skill
 "Apply bootloader-patterns patterns to this implementation"

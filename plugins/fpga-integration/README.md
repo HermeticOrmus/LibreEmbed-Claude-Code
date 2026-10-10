@@ -8,7 +8,7 @@ FPGA/MCU integration, HDL basics, soft cores, IP blocks
 - **Fpga Engineer** - Specialized agent for FPGA/MCU integration, HDL basics, soft cores, IP blocks
 
 ### Commands
-- `/fpga` - Quick-access command for fpga-integration workflows
+- `/fpga-integration:fpga` - Quick-access command for fpga-integration workflows
 
 ### Skills
 - **Fpga Patterns** - Pattern library and knowledge base for fpga-integration
@@ -23,11 +23,11 @@ FPGA/MCU integration, HDL basics, soft cores, IP blocks
 ## Usage Examples
 
 ```
-# Use the command directly
-/fpga analyze
+# Design an AXI-Lite register interface
+/fpga-integration:fpga design --module axi-lite-slave --regs 8 --data-width 32
 
-# Use the command with specific input
-/fpga generate --context "your project"
+# Generate a synthesis flow
+/fpga-integration:fpga synthesize --tool vivado --part xc7a35tcpg236-1 --top my_top
 
 # Reference patterns from the skill
 "Apply fpga-patterns patterns to this implementation"

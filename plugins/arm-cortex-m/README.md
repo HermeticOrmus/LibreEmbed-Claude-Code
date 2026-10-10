@@ -8,7 +8,7 @@ ARM Cortex-M programming, CMSIS, HAL, startup code
 - **Cortex M Engineer** - Specialized agent for ARM Cortex-M programming, CMSIS, HAL, startup code
 
 ### Commands
-- `/cortex-m` - Quick-access command for arm-cortex-m workflows
+- `/arm-cortex-m:cortex-m` - Quick-access command for arm-cortex-m workflows
 
 ### Skills
 - **Cortex M Patterns** - Pattern library and knowledge base for arm-cortex-m
@@ -23,11 +23,11 @@ ARM Cortex-M programming, CMSIS, HAL, startup code
 ## Usage Examples
 
 ```
-# Use the command directly
-/cortex-m analyze
+# Generate startup code and a linker script
+/arm-cortex-m:cortex-m init --mcu stm32f407 --flash 1024K --sram 192K --ccm 64K
 
-# Use the command with specific input
-/cortex-m generate --context "your project"
+# Configure interrupt priority grouping
+/arm-cortex-m:cortex-m configure --subsystem nvic --groups 4
 
 # Reference patterns from the skill
 "Apply cortex-m-patterns patterns to this implementation"

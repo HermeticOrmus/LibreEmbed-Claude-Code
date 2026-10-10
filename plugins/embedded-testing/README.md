@@ -8,7 +8,7 @@ Unit testing on target, HIL testing, mocking hardware
 - **Embedded Test Engineer** - Specialized agent for Unit testing on target, HIL testing, mocking hardware
 
 ### Commands
-- `/embedded-test` - Quick-access command for embedded-testing workflows
+- `/embedded-testing:embedded-test` - Quick-access command for embedded-testing workflows
 
 ### Skills
 - **Embedded Testing Patterns** - Pattern library and knowledge base for embedded-testing
@@ -23,11 +23,11 @@ Unit testing on target, HIL testing, mocking hardware
 ## Usage Examples
 
 ```
-# Use the command directly
-/embedded-test analyze
+# Generate unit tests for a sensor module
+/embedded-testing:embedded-test unit --module sensor --hal i2c
 
-# Use the command with specific input
-/embedded-test generate --context "your project"
+# Generate mocks for an I2C interface
+/embedded-testing:embedded-test mock --header hal_i2c.h --output test/mocks/
 
 # Reference patterns from the skill
 "Apply embedded-testing-patterns patterns to this implementation"

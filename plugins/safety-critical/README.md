@@ -8,7 +8,7 @@ IEC 61508, DO-178C, MISRA C, static analysis, certification
 - **Safety Engineer** - Specialized agent for IEC 61508, DO-178C, MISRA C, static analysis, certification
 
 ### Commands
-- `/safety` - Quick-access command for safety-critical workflows
+- `/safety-critical:safety` - Quick-access command for safety-critical workflows
 
 ### Skills
 - **Safety Critical Patterns** - Pattern library and knowledge base for safety-critical
@@ -23,11 +23,11 @@ IEC 61508, DO-178C, MISRA C, static analysis, certification
 ## Usage Examples
 
 ```
-# Use the command directly
-/safety analyze
+# Check a source file against MISRA rules
+/safety-critical:safety analyze --file src/motor_control.c --ruleset misra-2012
 
-# Use the command with specific input
-/safety generate --context "your project"
+# Rewrite a function to comply with a rule
+/safety-critical:safety enforce --function process_command --rule 15.5
 
 # Reference patterns from the skill
 "Apply safety-critical-patterns patterns to this implementation"

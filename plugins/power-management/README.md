@@ -8,7 +8,7 @@ Sleep modes, power budgeting, energy harvesting, battery
 - **Power Engineer** - Specialized agent for Sleep modes, power budgeting, energy harvesting, battery
 
 ### Commands
-- `/power` - Quick-access command for power-management workflows
+- `/power-management:power` - Quick-access command for power-management workflows
 
 ### Skills
 - **Power Mgmt Patterns** - Pattern library and knowledge base for power-management
@@ -23,11 +23,11 @@ Sleep modes, power budgeting, energy harvesting, battery
 ## Usage Examples
 
 ```
-# Use the command directly
-/power analyze
+# Estimate power use from an activity profile
+/power-management:power analyze --mcu stm32l476 --active-current 8mA --active-ms 100 --interval-s 60
 
-# Use the command with specific input
-/power generate --context "your project"
+# Configure Stop2 sleep with an EXTI wake source
+/power-management:power configure --mcu stm32l476 --mode stop2 --wakeup exti --pin PA0
 
 # Reference patterns from the skill
 "Apply power-mgmt-patterns patterns to this implementation"
